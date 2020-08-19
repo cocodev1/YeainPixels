@@ -1,0 +1,42 @@
+{
+    "day" : [
+        {
+            "type": "every"
+        },
+        {
+            "type" : "only",
+            "date": "2020-07-29"
+        },
+        {
+            "type": "week",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        },
+        {
+            "type": "mouth",
+            "days": [1, 4, 6, 32]
+        },
+        {
+            "type": "repeating",
+            "interval": 10,
+            "begining" : "2020-05-12"
+        },
+        {
+            "type": "saved"
+        }
+    ],
+    "objective": [
+        {
+            "type" : "date",
+            "actualDate": "2020-08-02",
+            "maxDate": "2020-08-14"
+        },
+        {
+            "type": "numberOfTimes",
+            "actualTimes" : 5,
+            "maxTimes": 30
+        },
+        {
+            "type": "never"
+        }
+    ]
+}

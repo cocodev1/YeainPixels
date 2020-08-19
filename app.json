@@ -1,14 +1,15 @@
 {
   "expo": {
+    "packagerOpts": { "config": "metro.config.js", "sourceExts": ["js", "jsx", "svg", "svgx"] },
     "name": "yip",
     "slug": "yip",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/cube.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/favicon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00171F"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,6 +19,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "fr.simon.yip",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
