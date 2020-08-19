@@ -8,7 +8,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-assets/yip-500c8eee8dfe412da5bfad118a57c962-signed.apk
-assets/yip-ffe6a47a9f3b4a47a9b18a0cd5438ee6-signed.apk
+assets/*.apk
 # macOS
 .DS_Store
