@@ -12,6 +12,7 @@ import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
 
 function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}) {
+
     useEffect(() => {
     dispatch(changeColor(MEDIUM_GRAY, null))
     }, [])
@@ -25,7 +26,7 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
     const {day} = route.params
     const date = year+'-'+mouth+'-'+day
     const {update} = route.params
-
+    
     useEffect(() => {
         getAllHabitsByDate(date).then(habits => {
             habits = habits.filter(habit => habit != undefined) 
@@ -36,9 +37,10 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
     const [isLoading, setLoading] = useState(false)
 
     function add() {
+        console.log(update, 'eo')
+        update({date, emotionState, text})
         setLoading(true)
         addDay(date, emotionState, text)
-        update({date, emotionState, text})
         setLoading(false)
         navigation.goBack()
     }

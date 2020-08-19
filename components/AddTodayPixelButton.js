@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {TouchableOpacity, StyleSheet, Dimensions, View} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import {getDayByDate} from '../db'
 import moment from 'moment'
 import { WHITE, MEDIUM_GRAY, DARK_GRAY } from '../styles/colors'
-import {BoxShadow} from 'react-native-shadow'
 
 
-function AddTodayPixelButton({update}) {
-
-    const [isVisible, setVisible] = useState(true)
-
+function AddTodayPixelButton(props) {
     const navigation = useNavigation()
-    useEffect(() => {
-        getDayByDate().then(day => {
-            if(day) {
-                setVisible(false)
-            }
-            else {
-                setVisible(true)
-            }
-
-        })
-    })
-
     const today = moment()
     const day = today.date()
     const mouth = today.format('MM') 
     const year = today.year()
-    function open() {
-        navigation.navigate('Fill Pixel', {day: day, mouth: mouth, year: year, update: update})
-    }
+
+    console.log(year, mouth, day)
 
     return(
-        <TouchableOpacity style={styles.container} onPress={open}>
-            <MaterialCommunityIcons name="pencil" size={24} color={WHITE} />
-        </TouchableOpacity>
+        <View>
+           {props.update != "" ? <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Fill Pixel', {day: day, mouth: mouth, year: year, update: props.update})}>
+                <MaterialCommunityIcons name="pencil" size={24} color={WHITE} />
+            </TouchableOpacity> : null}
+        </View>
   
     )
 

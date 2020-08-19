@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useRoute } from '@react-navigation/native'
@@ -22,7 +22,6 @@ function Year() {
     }, [update])
 
     const nums = Array.from(Array(13).keys()).filter(num => num != 0)
-
     return(
         <View>
             <View style={styles.container}>
@@ -40,7 +39,7 @@ function Year() {
                     scrollEnabled={false}
                     contentContainerStyle={{paddingBottom: (Dimensions.get('screen').width/13)-2}}/>
             </View>
-            <AddTodayPixelButton update={setUpdate}/>
+           { setUpdate != "" ? <AddTodayPixelButton update={setUpdate}/> : null}
         </View>
     )
 }
