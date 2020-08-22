@@ -12,12 +12,13 @@ import moment, { isMoment } from 'moment'
 import TypeDisplaySelector from '../components/TypeDisplaySelector'
 import { WHITE } from '../styles/colors';
 import { getDisplayType } from '../db';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-function LogoTitle() {
+function LogoTitle({childrenTitle}) {
     return (
-      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>Year in Pixels</Text>
+      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle}</Text>
     );
   }
 
@@ -32,10 +33,10 @@ export default function StackNav() {
     return(
         <Stack.Navigator initialRouteName='Year in Pixels'>
             <Stack.Screen name="Year in Pixels" component={BottomNav} initialParams={{type: viewYear}}
-            options={{
-                headerTitle: () => <LogoTitle />,
-                headerRight: () => (<TypeDisplaySelector />)
-            }}/>
+            options={({route}) => ({
+                headerTitle: () => <LogoTitle childrenTitle={getFocusedRouteNameFromRoute(route)}/>,
+                headerRight: () => (<TypeDisplaySelector childrenTitle={getFocusedRouteNameFromRoute(route)}/>)
+            })}/>
             <Stack.Screen name="Fill Pixel" component={FillPixelScreen} initialParams={{ day: 30, mouth: "07", year: "2020" }} 
                 options={({route}) => ({title: moment(route.params.year+'-'+route.params.mouth+'-'+route.params.day, 'YYYY-MM-DD').format("MMM Do YYYY")})}/>
             <Stack.Screen name="Pixel" component={PixelScreen} />
