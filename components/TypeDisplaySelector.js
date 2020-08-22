@@ -13,7 +13,7 @@ function TypeDisplaySelector({childrenTitle}) {
 
     useEffect(() => {
         getDisplayType().then(type => setParams({...route.params, type: type}))
-    }, [])
+    }, []) 
 
     if(childrenTitle == 'Year') {
         return (
