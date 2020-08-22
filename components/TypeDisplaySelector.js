@@ -9,7 +9,7 @@ import {getDisplayType, changeDisplayType} from '../db'
 function TypeDisplaySelector({childrenTitle}) {
 
     const {setParams} = useNavigation()
-    const route = useRoute() 
+    const route = useRoute()  
 
     useEffect(() => {
         getDisplayType().then(type => setParams({...route.params, type: type}))
