@@ -10,4 +10,6 @@ const mainStyle = StyleSheet.create({
     }
 })
 
-export default mainStyle
+const truncate = (input) => input.length > 5 ? `${input.substring(0, 5)}...` : input
+
+export {mainStyle, truncate}

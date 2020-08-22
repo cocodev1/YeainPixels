@@ -5,10 +5,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { connect } from 'react-redux'
 import {WHITE, DARK_GRAY} from '../styles/colors'
+import {truncate} from '../styles/mixins'
 import {BoxShadow} from 'react-native-shadow'
 import SetTrackerValue from './SetTrackerValue'
 import moment from 'moment'
 import {useRoute} from '@react-navigation/native'
+import shortNumber from 'short-number'
 
 function Tracker(props) {
     const route = useRoute();
@@ -80,7 +82,7 @@ function Tracker(props) {
         if(props.generated == true && (value == null || value == undefined)) {
             setValueToDisplay("Update it")
         }else {
-            setValueToDisplay(`${value} ${props.type}`)
+            setValueToDisplay(`${shortNumber(parseInt(value))} ${props.type}`)
         }
 
     }
@@ -118,7 +120,7 @@ function Tracker(props) {
                     {icon}
                 </View>
                 <View style={style.textContainer}>
-                    <Text style={style.textName}>{props.name}</Text>
+                    <Text style={style.textName}>{truncate(props.name)}</Text>
                     <Text style={style.textValue} adjustsFontSizeToFit>{valueToDisplay}</Text>
                 </View>
             </BoxShadow>

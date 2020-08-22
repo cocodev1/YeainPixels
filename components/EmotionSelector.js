@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
-import mainStyle from '../styles/mixins'
+import {mainStyle} from '../styles/mixins'
 import Emotion from './Emotion'
 import Frown from '../assets/svgs/emoticon/emoticon-frown-outline.svg'
 import Sad from '../assets/svgs/emoticon/emoticon-sad-outline.svg'

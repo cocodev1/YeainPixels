@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
 import {MEDIUM_GRAY, WHITE} from '../styles/colors'
-import {mainStyle} from '../styles'
+import {mainStyle} from '../styles/mixins'
 import * as db from '../db'
 
 export default function ImagePicker(props) {

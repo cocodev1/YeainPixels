@@ -50,6 +50,9 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         }}
         >
             <View>
+                <View style={styles.header}>
+                <Text style={styles.headerText}>{props.name}</Text>
+                </View>
                 <View style={styles.optionContainer}>
                     <TouchableOpacity style={styles.optionButton} onPress={onSubmitSame}>
                             <Text style={styles.optionText}>Like last day</Text>
@@ -118,6 +121,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         padding: 7
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    headerText: {
+        color: WHITE,
+        fontSize: 16,
+        fontWeight: '700'
     }
 })
 
