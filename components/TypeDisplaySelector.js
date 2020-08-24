@@ -7,7 +7,7 @@ import {getDisplayType, changeDisplayType} from '../db'
 
 
 function TypeDisplaySelector({childrenTitle}) {
-
+    
     const {setParams} = useNavigation()
     const route = useRoute()   
 
@@ -15,7 +15,7 @@ function TypeDisplaySelector({childrenTitle}) {
         getDisplayType().then(type => setParams({...route.params, type: type}))
     }, []) 
 
-    if(childrenTitle == 'Year') {
+    if(childrenTitle == 'Year' || childrenTitle == undefined) {
         return (
             <View style={styles.container}>
                 <Icon setSelected={() => {setParams({...route.params, type: 'mouth'}); changeDisplayType('mouth')}} selected={route.params.type == 'mouth' ? true : false} iconName='view-agenda'/>

@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 
 function LogoTitle({childrenTitle}) {
     return (
-      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle}</Text>
+      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle || 'Year'}</Text>
     );
   }
 
