@@ -21,8 +21,11 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         props.setUpdated(1)
     }
 
+    const [isActive, setActive] = useState(props.active)
+
     function changeActive() {
-        changeActiveTracker(props.tracker_rules_id, props.active == 1 ? false : true)
+        changeActiveTracker(props.tracker_rules_id, isActive == 1 ? 0 : 1)
+        setActive(isActive == 1 ? 0 : 1)
     }
 
     function onSubmitSame() {
@@ -43,7 +46,7 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         <RBSheet
         ref={ref}
         closeOnPressMask={true}
-        height={460}
+        height={260}
         customStyles={{
             wrapper: {
             },
@@ -94,7 +97,8 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         marginLeft: 18,
-        color: WHITE
+        color: WHITE, 
+        flex: 1
     },
     setButton: {
         borderRadius: 50,
@@ -131,13 +135,14 @@ const styles = StyleSheet.create({
         padding: 7
     },
     header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        flexDirection: 'column',
     },
     headerText: {
         color: WHITE,
-        fontSize: 16,
-        fontWeight: '700'
+        fontSize: 26,
+        fontWeight: '700',
+        textAlign: 'center',
+        marginTop: 16
     }
 })
 

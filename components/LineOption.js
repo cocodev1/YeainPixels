@@ -15,11 +15,14 @@ function LineOption({defaultValue, onPressActive, onPressDesactive, children}) {
 const styles = StyleSheet.create({
     container: {
         margin: 16,
-        justifyContent: 'space-between'
+        marginTop: 8,
+        marginBottom: 8,
+        justifyContent: 'space-between',
+        flexDirection: 'row'
     },
     text: {
         color: WHITE,
-        fontSize: 14
+        fontSize: 22
     }
 })
 
