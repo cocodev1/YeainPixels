@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         marginLeft: 18,
-        color: WHITE
+        color: WHITE,
+        flex: 1
     },
     setButton: {
         borderRadius: 50,

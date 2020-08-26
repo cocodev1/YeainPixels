@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Switch, View} from 'react-native'
+import {WHITE, MEDIUM_GRAY, DARK_GRAY} from '../styles/colors'
 
 function ActiveSwitch({defaultValue, onPressActive, onPressDesactive}) {
 
@@ -18,6 +19,8 @@ function ActiveSwitch({defaultValue, onPressActive, onPressDesactive}) {
     return(
         <View>
             <Switch 
+            trackColor={{true: MEDIUM_GRAY, false: DARK_GRAY}}
+            thumbColor={isEnabled ? WHITE : MEDIUM_GRAY}
             onValueChange={toggleSwitch}
             value={isEnabled}/>
         </View>

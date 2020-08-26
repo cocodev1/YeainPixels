@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     searchBarInput: {
         fontSize: 22,
         color: WHITE,
-        marginLeft: 10
+        marginLeft: 10,
+        flex: 1
     }
 })
 

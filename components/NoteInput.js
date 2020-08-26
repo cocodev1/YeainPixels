@@ -25,13 +25,14 @@ const style = StyleSheet.create({
         marginTop: 30,
         marginLeft: 30,
         marginRight: 20,
-        padding: 20,
     },
     textInput: {
-        height: 20,
+        height: 50,
+        paddingLeft: 10,
         fontSize: 20,
         fontWeight: '700',
-        color: WHITE
+        color: WHITE,
+        flex: 1
     },
     focused: {
         position: "absolute",
