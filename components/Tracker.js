@@ -124,7 +124,7 @@ function Tracker(props) {
                     <Text style={style.textValue} adjustsFontSizeToFit>{valueToDisplay}</Text>
                 </View>
             </BoxShadow>
-            <SetTrackerValue ref={refRBSheet} setValue={setValue} setUpdated={setUpdated} id={props.generated ? null : props.id} value={props.value} generated={props.generated} tracker_rules_id={props.generated ? props.id : null} icon={props.icon} type={props.type} name={props.name} navDay={navDate.format("YYYY-MM-DD")}/>
+            <SetTrackerValue ref={refRBSheet} setValue={setValue} setUpdated={setUpdated} id={props.generated ? null : props.id} value={props.value} generated={props.generated} tracker_rules_id={props.generated ? props.id : props.tracker_rules_id} active={props.active} icon={props.icon} type={props.type} name={props.name} navDay={navDate.format("YYYY-MM-DD")}/>
         </TouchableOpacity>
     )
 }

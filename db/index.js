@@ -110,7 +110,7 @@ var getTrackersByDate = function(date) {
 var getTrackerRulesByDate = function(date) {
     return new Promise((resolve, reject) => {
         db.transaction(tx => {
-            tx.executeSql("SELECT * FROM tracker_rules WHERE active = 1", [], (trans, res) => {
+            tx.executeSql("SELECT * FROM tracker_rules", [], (trans, res) => {
                 var trackerRules = []
                 for(var i = 0; i < res.rows.length; i++) {
                     if(moment(res.rows.item(i).begining, 'YYYY-MM-DD').isSameOrBefore(moment(date, 'YYYY-MM-DD'))) {
@@ -134,9 +134,11 @@ var getRelativeTrackersByDate = async function(date) {
     for (trackerRule of trackerRules) {
         if(trackers.filter(tracker => tracker.tracker_rules_id == trackerRule.id).length >= 1) {
             var newTracker = trackers.filter(tracker => tracker.tracker_rules_id == trackerRule.id)[0]
-            relativeTrackers.push({...newTracker, generated: false})
+            relativeTrackers.push({...newTracker, generated: false, active: trackerRule.active})
         }else {
-            relativeTrackers.push({...trackerRule, generated: true})
+            if(trackerRule.active == 1) {
+                relativeTrackers.push({...trackerRule, generated: true})
+            }
         }
     }
     return relativeTrackers
@@ -160,6 +162,15 @@ var addTrackerRule = function(name, icon, type, date) {
         })
     })
 }
+
+var changeActiveTracker = function(tracker_rules_id, active) {
+    db.transaction(tx => {
+        tx.executeSql("UPDATE tracker_rules SET active = ? WHERE id = ?", [active, tracker_rules_id], (trans, res) => {}, (trans, err) => {
+            console.log(err)
+            return err
+        })
+    })
+} 
 
 var addHabitRule = function(name, date, option) {
     db.transaction(tx => {
@@ -325,5 +336,6 @@ export {
     addType,
     getDisplayType,
     changeDisplayType,
+    changeActiveTracker,
     getDb
 }

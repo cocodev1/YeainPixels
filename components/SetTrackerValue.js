@@ -2,21 +2,27 @@ import React, { useRef, useState, useEffect, forwardRef } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { DARK_GRAY, WHITE, MEDIUM_GRAY} from '../styles/colors'
-import {updateTracker, addTracker} from '../db'
+import {updateTracker, addTracker, changeActiveTracker} from '../db'
+import LineOption from "./LineOption";
 
 var SetTrackerValue = forwardRef((props, ref) =>  {
 
-    const [text, setText] = useState('');
+    const [text, setText] = useState('') 
+
     function onSubmit() {
         ref.current.close()
         if(props.generated == false) {
             updateTracker(props.id, 1, text)
         }else {
-            console.log(props)
+            //console.log(props)
             addTracker(props.name, props.icon, text, props.type, props.navDay, props.tracker_rules_id)
         }
         props.setValue(text)
         props.setUpdated(1)
+    }
+
+    function changeActive() {
+        changeActiveTracker(props.tracker_rules_id, props.active == 1 ? false : true)
     }
 
     function onSubmitSame() {
@@ -37,7 +43,7 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         <RBSheet
         ref={ref}
         closeOnPressMask={true}
-        height={135}
+        height={460}
         customStyles={{
             wrapper: {
             },
@@ -51,7 +57,8 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         >
             <View>
                 <View style={styles.header}>
-                <Text style={styles.headerText}>{props.name}</Text>
+                    <Text style={styles.headerText}>{props.name}</Text>
+                    <LineOption defaultValue={props.active == 1 ? true : false} onPressActive={changeActive} onPressDesactive={changeActive}>Active</LineOption>
                 </View>
                 <View style={styles.optionContainer}>
                     <TouchableOpacity style={styles.optionButton} onPress={onSubmitSame}>
@@ -78,6 +85,7 @@ const styles = StyleSheet.create({
         borderColor: WHITE,
         borderRadius: 50,
         margin: 15,
+        marginBottom: 50,
         flexDirection: "row",
         justifyContent: 'space-between',
         alignItems: 'center',
