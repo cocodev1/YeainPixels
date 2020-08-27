@@ -6,6 +6,7 @@ import { useRoute } from '@react-navigation/native'
 import moment from "moment"
 import AdvancedSelector from './AdvancedSelector';
 import { WHITE, MEDIUM_GRAY } from '../../styles/colors';
+import OptionSelector from '../OptionSelector';
 
 function Objective({objective, setObjective, repeat}) {
 
@@ -58,6 +59,7 @@ function Objective({objective, setObjective, repeat}) {
                             <Text style={styles.timesText}> times</Text>
                         </View>
                     </AdvancedSelector>
+                    <OptionSelector selected={selected == 'never'} setSelected={() => {setSelected('never'); setObjective({type: 'never'})}}>Never complete</OptionSelector>
                 </View>
             : null }
             {show && (
