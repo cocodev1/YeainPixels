@@ -5,7 +5,7 @@ import AddButton from './AddButton'
 import Habit from './Habit'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-function Habits({habits, setUptdateHabit, disabled}) {
+function Habits({habits, setUptdateHabit, disabled, deleteHabit}) {
     const navigation = useNavigation()
     const route = useRoute()
     
@@ -20,7 +20,7 @@ function Habits({habits, setUptdateHabit, disabled}) {
             </View>
             <FlatList 
                 data={habits}
-                renderItem={({item}) => <Habit checked={ item.status ? true : false} name={item.name} habit_rules_id={item.habit_rules_id}>{item.name}</Habit>}
+                renderItem={({item}) => <Habit deleteHabit={deleteHabit} checked={ item.status ? true : false} name={item.name} habit_rules_id={item.habit_rules_id}>{item.name}</Habit>}
                 keyExtractor={(item) => habits.indexOf(item)}/>
         </View>
             
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 20,
         marginRight: 20,
-        marginBottom: 10
+        marginBottom: 15
     }
 })
 

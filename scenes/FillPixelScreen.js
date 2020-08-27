@@ -6,7 +6,7 @@ import NoteInput from '../components/NoteInput'
 import Trackers from '../components/Trackers'
 import Habits  from '../components/Habits'
 import {connect} from 'react-redux'
-import {getAllHabitsByDate, addDay} from '../db'
+import {getAllHabitsByDate, addDay, deleteHabitRule} from '../db'
 import BigButton from '../components/BigButton'
 import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
@@ -43,6 +43,12 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
         navigation.goBack()
     }
 
+    function deleteHabit(id) {
+        deleteHabitRule(id)
+        newHabits = habits.filter(habit => habit.habit_rules_id != id)
+        setHabits(newHabits)
+    }
+
 
     return(
         <ScrollView> 
@@ -50,7 +56,7 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
             <EmotionSelector />
             <NoteInput text={text} setText={setText}/>
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
-            <Habits habits={habits} setUptdateHabit={setUptdateHabit}/>
+            <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
             <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
         </ScrollView>
     )

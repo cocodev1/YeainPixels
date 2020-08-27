@@ -181,6 +181,15 @@ var addHabitRule = function(name, date, option) {
     })
 }
 
+var deleteHabitRule = function(id) {
+    db.transaction(tx => {
+        tx.executeSql("DELETE FROM habit_rules WHERE id = ?", [id], (trans, res) => {}, (trans, err) =>  {
+            console.log(err)
+            return err
+        })
+    })
+}
+
 var updateTracker = function(id, updated, value) {
     db.transaction(tx => {
         if(value) {
@@ -332,6 +341,7 @@ export {
     addHabit,
     incrementNumberOfTimesHabitRule,
     addHabitRule,
+    deleteHabitRule,
     getTypes,
     addType,
     getDisplayType,

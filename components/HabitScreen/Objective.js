@@ -78,7 +78,7 @@ function Objective({objective, setObjective, repeat}) {
 
 const styles = StyleSheet.create({
     header: {
-        marginTop: 10,
+        marginTop: 0,
         marginBottom: 10
     },
     mainContainer: {
