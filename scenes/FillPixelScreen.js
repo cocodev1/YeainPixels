@@ -10,6 +10,7 @@ import {getAllHabitsByDate, addDay, deleteHabitRule} from '../db'
 import BigButton from '../components/BigButton'
 import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
+import PicPicker from '../components/PicPicker'
 
 function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}) {
     useEffect(() => {
@@ -58,6 +59,7 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
             <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
             <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
+            <PicPicker setPic={(uri) => console.log(uri)}/>
         </ScrollView>
     )
 }
