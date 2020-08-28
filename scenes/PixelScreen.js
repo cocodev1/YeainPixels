@@ -1,11 +1,12 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect, useLayoutEffect }  from 'react'
 import { ScrollView } from 'react-native'
 import {getDayByDate} from '../db'
 import EmotionDisplay from '../components/PixelScreen/EmotionDisplay'
 import Note from '../components/PixelScreen/Note'
 import Trackers from '../components/Trackers'
 import Habits from '../components/Habits'
-import {getAllHabitsByDate} from '../db'
+import ImageDisplayer from '../components/ImageDisplayer'
+import {getAllHabitsByDate, getPic} from '../db'
 import {connect} from 'react-redux'
 import changeColor from '../redux/actions/changeColor'
 import {getColorByEmotion} from '../styles/colors'
@@ -44,8 +45,15 @@ function PixelScreen({route, navigation, dispatch}) {
         dispatch(changeColor(getColorByEmotion(dayVal.emotion), null))
     }, [dayVal])
 
+    const [pic, setPic] = useState(null)
+
+    useLayoutEffect(() => {
+        getPic(date).then(uri => setPic(uri))
+    })
+
     return(
         <ScrollView>
+            <ImageDisplayer uri={pic} />
             <EmotionDisplay emotion={dayVal.emotion}/>
             <Note>{dayVal.note}</Note>
             <Trackers disabled={true}/>
