@@ -322,6 +322,32 @@ var changeDisplayType = function(type) {
     })
 }
 
+var addPic = function(date, uri) {
+    db.transaction(tx => {
+        tx.executeSql("INSERT INTO pics (day, path) VALUES (?, ?)", [date, uri], (trans, res) => {}, (trans, err) => {
+            console.log(err)
+            return err
+        })
+    })
+}
+
+var getPic = function(date) {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql("SELECT * FROM pics WHERE day = ?", [date], (trans, res) => {
+                if(res.rows.length == 0) {
+                    resolve(null)
+                }else {
+                    resolve(res.rows.item(0).path)
+                }
+            }, (trans, err) => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    })
+}
+
 var getDb = function() {
     return db
 }
@@ -347,5 +373,7 @@ export {
     getDisplayType,
     changeDisplayType,
     changeActiveTracker,
+    addPic,
+    getPic,
     getDb
 }

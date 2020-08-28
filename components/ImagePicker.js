@@ -1,18 +1,27 @@
-import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text} from 'react-native'
+import React, {useEffect, useState} from 'react'
+import { StyleSheet, View, TouchableOpacity, Text, Image} from 'react-native'
 import {MEDIUM_GRAY, WHITE} from '../styles/colors'
 import {mainStyle} from '../styles/mixins'
-import * as db from '../db'
+import {addPic} from '../db'
 
-export default function ImagePicker(props) {
+export default function ImagePicker({pic, date, onPress}) {
+
+    const [uri, setUri] = useState(pic)
+
+    useEffect(() => {
+        addPic(date, pic)
+        setUri(pic)
+    }, [pic])
 
     return(
         <View style={mainStyle.bigContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPress}>
                 <View style={styles.container}>
+                    {uri ? 
+                    <Image source={{uri: uri}} resizeMode='contain'/> : 
                     <Text style={styles.text}>
                         PickImage
-                    </Text>
+                    </Text>}
                 </View>
             </TouchableOpacity>
         </View>

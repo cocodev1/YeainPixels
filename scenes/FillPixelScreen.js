@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import { ScrollView } from 'react-native'
 import ImagePicker from '../components/ImagePicker'
 import EmotionSelector from '../components/EmotionSelector'
@@ -11,6 +11,7 @@ import BigButton from '../components/BigButton'
 import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
 import PicPicker from '../components/PicPicker'
+import {getPic} from '../db'
 
 function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}) {
     useEffect(() => {
@@ -50,16 +51,23 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
         setHabits(newHabits)
     }
 
+    const refRBSheet = useRef()
+
+    const [pic, setPic] = useState(null)
+
+    useEffect(() => {
+        getPic(date).then(pic => setPic(pic))
+    }, [])
 
     return(
         <ScrollView> 
-            <ImagePicker />
+            <ImagePicker pic={pic} date={date} onPress={() => refRBSheet.current.open()}/>
             <EmotionSelector />
             <NoteInput text={text} setText={setText}/>
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
             <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
             <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
-            <PicPicker setPic={(uri) => console.log(uri)}/>
+            <PicPicker ref={refRBSheet} setPic={setPic}/>
         </ScrollView>
     )
 }
