@@ -9,7 +9,6 @@ export default function ImagePicker({pic, date, onPress}) {
     const [uri, setUri] = useState(pic)
 
     useEffect(() => {
-        addPic(date, pic)
         setUri(pic)
     }, [pic])
 
@@ -18,9 +17,9 @@ export default function ImagePicker({pic, date, onPress}) {
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.container}>
                     {uri ? 
-                    <Image source={{uri: uri}} resizeMode='contain'/> : 
+                    <Image source={{uri: uri}} style={{resizeMode: 'cover', width: 200, height: 200, borderRadius: 25}}/> : 
                     <Text style={styles.text}>
-                        PickImage
+                        Pick an Image
                     </Text>}
                 </View>
             </TouchableOpacity>
@@ -33,13 +32,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
         backgroundColor: MEDIUM_GRAY,
-        width: 330,
-        height: 180,
         marginTop: 10,
         borderRadius: 56
     },
     text: {
         color: WHITE,
+        backgroundColor: MEDIUM_GRAY,
         textAlign: 'center',
+        padding: 100,
+        borderRadius: 20,
+        borderWidth: 2
     }
 })

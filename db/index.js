@@ -323,6 +323,7 @@ var changeDisplayType = function(type) {
 }
 
 var addPic = function(date, uri) {
+    console.log(date, uri)
     db.transaction(tx => {
         tx.executeSql("INSERT INTO pics (day, path) VALUES (?, ?)", [date, uri], (trans, res) => {}, (trans, err) => {
             console.log(err)
@@ -338,7 +339,7 @@ var getPic = function(date) {
                 if(res.rows.length == 0) {
                     resolve(null)
                 }else {
-                    resolve(res.rows.item(0).path)
+                    resolve(res.rows.item(res.rows.length-1).path)
                 }
             }, (trans, err) => {
                 console.log(err)

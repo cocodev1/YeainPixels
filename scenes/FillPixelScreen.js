@@ -56,7 +56,9 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
     const [pic, setPic] = useState(null)
 
     useEffect(() => {
-        getPic(date).then(pic => setPic(pic))
+        getPic(date).then(pic => {
+            setPic(pic)
+        })
     }, [])
 
     return(
@@ -67,7 +69,7 @@ function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
             <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
             <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
-            <PicPicker ref={refRBSheet} setPic={setPic}/>
+            <PicPicker ref={refRBSheet} setPic={setPic} date={date}/>
         </ScrollView>
     )
 }
