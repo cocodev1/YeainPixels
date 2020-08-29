@@ -5,7 +5,7 @@ import { WHITE, MEDIUM_GRAY } from '../styles/colors'
 import Title from './Title'
 import AddButton from './AddButton'
 import AddType from './AddType'
-import {getTypes, addType} from '../db'
+import {addType} from '../db'
 
 function TrackerTypes({types, reloadTypes, actualType, setActualType}) {
 
@@ -19,7 +19,7 @@ function TrackerTypes({types, reloadTypes, actualType, setActualType}) {
 
 
     types.forEach(typeEl => {
-        typeElements.push(<OptionSelector width={120} setSelected={setActualTypeCallback} selected={actualType == typeEl}>{typeEl}</OptionSelector>)
+        typeElements.push(<OptionSelector width={120} setSelected={setActualTypeCallback} selected={actualType == typeEl} key={typeEl}>{typeEl}</OptionSelector>)
     })
 
     function addNewType(type) {

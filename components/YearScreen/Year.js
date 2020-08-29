@@ -40,7 +40,6 @@ function Year() {
                     scrollEnabled={false}
                     contentContainerStyle={{paddingBottom: (Dimensions.get('screen').width/13)-2}}/>
             </View>
-            <AddTodayPixelButton update={setUpdate}/>
         </View>
     )
 }

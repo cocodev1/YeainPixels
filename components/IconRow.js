@@ -8,7 +8,7 @@ function IconRow(props) {
         props.setSelected(name)
     }, [])
 
-    var iconComponents = props.iconNames.map(iconName => <Icon iconName={iconName} setSelected={setSelected} selected={props.iconSelected == iconName}/>)
+    var iconComponents = props.iconNames.map(iconName => <Icon iconName={iconName} setSelected={setSelected} selected={props.iconSelected == iconName} key={iconName}/>)
 
     return (
     <View style={styles.container}>

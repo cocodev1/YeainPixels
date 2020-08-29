@@ -32,7 +32,7 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
         >
             <View>
                 <View style={styles.inputContainer}>
-                    <TextInput placeholder="Type a value" style={styles.input} onChangeText={text => setText(text)} defaultValue={text} onSubmitEditing={onSubmit}/>
+                    <TextInput placeholder="Type a value" style={styles.input} onChangeText={text => setText(text)} defaultValue={text} onSubmitEditing={onSubmit} autoCapitalize='none'/>
                     <TouchableOpacity style={styles.setButton} onPress={onSubmit}>
                         <Text style={styles.setButtonText}>Add</Text>
                     </TouchableOpacity>
