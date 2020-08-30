@@ -17,8 +17,19 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 const Stack = createStackNavigator();
 
 function LogoTitle({childrenTitle}) {
+    if(childrenTitle) {
+        if(childrenTitle == 'Year') {
+            return (
+                <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{moment().format('YYYY')}</Text>
+            )
+        }else {
+            return (
+                <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle}</Text>
+            )
+        }
+    }
     return (
-      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle || 'Year'}</Text>
+      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{moment().format('YYYY')}</Text>
     );
   }
 

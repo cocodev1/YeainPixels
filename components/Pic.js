@@ -10,8 +10,8 @@ function Pic({onPress, source, date}) {
     }
 
     return(
-        <TouchableOpacity onPress={press}>
-            <Image source={{uri: source}} resizeMode='contain' style={{resizeMode: 'contain', width: Dimensions.get('screen').width/4, height: Dimensions.get('screen').height/4}} />
+        <TouchableOpacity onPress={press} style={{margin: 1}}>
+            <Image source={{uri: source}} resizeMode='contain' style={{resizeMode: 'contain', width: (Dimensions.get('screen').width/4)-2, height: (Dimensions.get('screen').height/4)-2}} />
         </TouchableOpacity>
     )
 }
