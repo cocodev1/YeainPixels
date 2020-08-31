@@ -13,6 +13,8 @@ const Tab = createBottomTabNavigator();
 export default function BottomNav({route, navigation}) {
     const {type} = route.params
 
+    const year = moment().year()
+
     return(
         <Tab.Navigator initialRouteName={'Year'}
         screenOptions={({route}) => ({
@@ -33,8 +35,8 @@ export default function BottomNav({route, navigation}) {
             activeTintColor: WHITE,
             inactiveTintColor: '#777777'
         }}>
-            <Tab.Screen name="Year" component={type == 'year' ? YearScreen : type == 'mouth' ? MouthViewScreen : LoadingScreen} initialParams={{year: moment().year()}}/>
-            <Tab.Screen name="Stats" component={StatScreen} />
+            <Tab.Screen name="Year" component={type == 'year' ? YearScreen : type == 'mouth' ? MouthViewScreen : LoadingScreen} initialParams={{year: year}}/>
+            <Tab.Screen name="Stats" component={StatScreen} initialParams={{year: moment().year()}}/>
             <Tab.Screen name="Account" component={ProfilScreen} />
         </Tab.Navigator>
     )

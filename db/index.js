@@ -349,6 +349,23 @@ var getPic = function(date) {
     })
 }
 
+
+var getAllMoods = function(year) {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql('SELECT emotion FROM days WHERE day > ? AND day < ?', [moment(year, 'YYYY').format('DD-MM-YYYY'), moment('31-12-'+ year, 'YYYY-MM-DD').format('YYYY-MM-DD')],  (trans, res) => {
+                var emotions = []
+                for(var i = 0; i < res.rows.length; i++) {
+                        emotions.push(res.rows.item(i).emotion)
+                }
+                resolve(emotions)
+            }, (trans, err) => {
+                reject(err)
+            })
+        })
+    })
+}
+
 var getDb = function() {
     return db
 }
@@ -376,5 +393,6 @@ export {
     changeActiveTracker,
     addPic,
     getPic,
+    getAllMoods,
     getDb
 }
