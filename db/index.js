@@ -4,6 +4,29 @@ import moment from 'moment'
 
 var db = SQLite.openDatabase('db')
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function generateFullYear() {
+    var testemo = []
+    for(let i = 1; i < 13; i++) {
+        for(let index = 1; index < 32; index++) {
+            if(moment(index+'-'+i+"-2020", 'D-M-YYYY').isValid()) {
+                db.transaction(tx => {
+                    tx.executeSql("INSERT INTO days (day, emotion, note) VALUES (?, ?, ?);", [moment(`2020-${i}-${index}`, 'YYYY-MM-DD').format('YYYY-M-D'), getRandomInt(1, 4), 'loa'], (trans, res) => {console.log(moment(`2020-${index}-${i}`, 'YYYY-MM-DD').format('YYYY-MM-DD'), getRandomInt(1, 4), 'loa')}, (trans, err) => {
+                        console.log(moment(`2020-${index}-${i}`, 'YYYY-MM-DD').format('YYYY-MM-DD'), getRandomInt(1, 4), 'loa')
+                        return err
+                    })
+                })
+            }
+        }
+    }    
+}
+
 var createTablesString = [
     "CREATE TABLE IF NOT EXISTS days(day DATE PRIMARY KEY, emotion INT, note TEXT);",
     "CREATE TABLE IF NOT EXISTS tracker_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, begining DATE, name TEXT, icon TEXT, type INTEGER, active INTEGER DEFAULT 1);",
@@ -15,7 +38,7 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS status(name TEXT UNIQUE, icon TEXT);",
     "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
-    "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);"
+    "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
 ]
 
 var dropTablesString = [
@@ -34,7 +57,7 @@ var createTables = function() {
     createTablesString.forEach(string => {
         db.transaction(tx => {
             tx.executeSql(string, [], (trans, res) => {
-            }, (trans, err) => {console.log(err)});
+            }, (trans, err) => {console.log(err, string)});
         })
     })
 }
@@ -394,5 +417,6 @@ export {
     addPic,
     getPic,
     getAllMoods,
+    generateFullYear,
     getDb
 }
