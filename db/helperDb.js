@@ -147,7 +147,7 @@ function getHabitByHabitsRule(habit_rule, habits, date) {
 
     for(habit of habits) {
         if(habit.habit_rules_id == habit_rule.id && moment(habit.day, 'YYYY-MM-DD').isSame(moment(date, 'YYYY-MM-DD'))) {
-            return {...habit, generated: false}
+            return {...habit}
         }
     }
     return null
@@ -239,32 +239,32 @@ function getAllHabits(habit_rules, habits, date) {
     
     var allHabits = []
     var habit_rule
-    allHabits = habits.filter(habit => moment(habit.day, 'YYYY-MM-DD').isSame(moment(date, 'YYYY-MM-DD')))
+    //allHabits = habits.filter(habit => moment(habit.day, 'YYYY-MM-DD').isSame(moment(date, 'YYYY-MM-DD'))).map(habit => habit = {...habit, generated: false})
     for(habit_rule of habit_rules) {
         const option = JSON.parse(habit_rule.option)
         if(moment(habit_rule.begining, 'YYYY-MM-DD').isSameOrBefore(moment(date, 'YYYY-MM-DD'))) {
             if(getHabitByHabitsRule(habit_rule, habits, date)) {
                 var habitByHabitRule = getHabitByHabitsRule(habit_rule, habits, date)
-                if(!allHabits.includes(habitByHabitRule)) {
-                    allHabits.push(getHabitByHabitsRule(habit_rule, habits, date))
+                if(!allHabits.includes({...habitByHabitRule, generated: false})) {
+                    allHabits.push({...getHabitByHabitsRule(habit_rule, habits, date), generated: false})
                 }
             }else {
                 if(isInObjective(option, date)) {
                     if(option.day.type == "every") {
                         var habit = getEveryHabitByHabitRule(habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id})
+                        allHabits.push({...habit, habit_rules_id: habit_rule.id, generated: true})
                     }else if(option.day.type == "only") {
                         var habit = getOnlyHabitByHabitRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id})
+                        allHabits.push({...habit, habit_rules_id: habit_rule.id, generated: true})
                     }else if(option.day.type == "week") {
                         var habit = getWeekHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id})
+                        allHabits.push({...habit, habit_rules_id: habit_rule.id, generated: true})
                     }else if(option.day.type == "mouth") {
                         var habit = getMouthHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id})
+                        allHabits.push({...habit, habit_rules_id: habit_rule.id, generated: true})
                     }else if(option.day.type == "repeating") {
                         var habit = getRepeatingHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id})
+                        allHabits.push({...habit, habit_rules_id: habit_rule.id, generated: true})
                     }
                 }
             }

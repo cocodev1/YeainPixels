@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
 import {TouchableOpacity, Dimensions, StyleSheet, View, Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { WHITE, ALIZARIN } from '../../styles/colors'
+import { WHITE } from '../../styles/colors'
 
 function Pixel({color, year, mouth, day, isClickable, display, update}) {
 

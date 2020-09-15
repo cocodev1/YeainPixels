@@ -39,7 +39,7 @@ function PixelScreen({route, navigation, dispatch}) {
             habits = habits.filter(habit => habit != undefined) 
             setHabits(habits)
         })
-    }, [updateHabit])
+    }, [])
 
     useEffect(() => {
         dispatch(changeColor(getColorByEmotion(dayVal.emotion), null))

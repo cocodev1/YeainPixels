@@ -12,8 +12,12 @@ import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
 import PicPicker from '../components/PicPicker'
 import {getPic} from '../db'
+import { useNavigation } from '@react-navigation/native'
 
-function FillPixelScreen({route, navigation, emotionState, colorState, dispatch}) {
+function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
+
+    const navigation = useNavigation()
+
     useEffect(() => {
     dispatch(changeColor(MEDIUM_GRAY, null))
     }, [])
