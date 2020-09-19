@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react' 
-import {TouchableOpacity, Text, StyleSheet, ActivityIndicator} from 'react-native'
+import {TouchableOpacity, Text, StyleSheet, ActivityIndicator, Dimensions} from 'react-native'
 import { MEDIUM_GRAY, WHITE } from '../styles/colors'
+import {BoxShadow} from 'react-native-shadow'
 
 function BigButton({onPress, color, children, loading}) {
 
@@ -24,7 +25,7 @@ function BigButton({onPress, color, children, loading}) {
     })
 
     return(
-        <TouchableOpacity style={styles.container} onPress={onPress}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             {loading ? <ActivityIndicator color={WHITE} size={30}/> : <Text style={styles.text}>{children}</Text>}
         </TouchableOpacity>
     )

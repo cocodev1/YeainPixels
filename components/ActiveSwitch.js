@@ -20,7 +20,7 @@ function ActiveSwitch({defaultValue, onPressActive, onPressDesactive}) {
         <View>
             <Switch 
             trackColor={{true: WHITE, false: MEDIUM_GRAY}}
-            thumbColor={isEnabled ? WHITE : MEDIUM_GRAY}
+            thumbColor={WHITE}
             onValueChange={toggleSwitch}
             value={isEnabled}/>
         </View>

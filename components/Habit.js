@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     },
     text: {
         paddingLeft: 8,
+        paddingRight: 50,
         color: WHITE,
         fontSize: 22
     }

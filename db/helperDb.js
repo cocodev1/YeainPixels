@@ -246,7 +246,7 @@ function getAllHabits(habit_rules, habits, date) {
             if(getHabitByHabitsRule(habit_rule, habits, date)) {
                 var habitByHabitRule = getHabitByHabitsRule(habit_rule, habits, date)
                 if(!allHabits.includes({...habitByHabitRule, generated: false})) {
-                    allHabits.push({...getHabitByHabitsRule(habit_rule, habits, date), generated: false})
+                    allHabits.push({...getHabitByHabitsRule(habit_rule, habits, date), generated: false, active: habit_rule.active})
                 }
             }else {
                 if(isInObjective(option, date) && habit_rule.active == 1) {
