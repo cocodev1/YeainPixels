@@ -19,7 +19,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     const navigation = useNavigation()
 
     useEffect(() => {
-    dispatch(changeColor(MEDIUM_GRAY, null))
+    dispatch(changeColor(MEDIUM_GRAY, null)) 
     }, [])
 
     const [text, setText] = useState('')

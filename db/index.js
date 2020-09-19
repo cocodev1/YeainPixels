@@ -32,7 +32,7 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS tracker_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, begining DATE, name TEXT, icon TEXT, type INTEGER, active INTEGER DEFAULT 1);",
     "CREATE TABLE IF NOT EXISTS trackers(id INTEGER PRIMARY KEY AUTOINCREMENT, tracker_rules_id INTEGER, name TEXT, icon TEXT, value INT, type INTEGER, day DATE);",
     //"CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, status INTEGER, day DATE, option TEXT, active INTEGER DEFAULT 1);",
-    "CREATE TABLE IF NOT EXISTS habit_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, begining DATE, name TEXT, option TEXT);",
+    "CREATE TABLE IF NOT EXISTS habit_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, begining DATE, name TEXT, option TEXT, active INTEGER DEFAULT 1);",
     "CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, day DATE, name TEXT, status TEXT, habit_rules_id INTEGER, UNIQUE(habit_rules_id, day));",
     "CREATE TABLE IF NOT EXISTS types (name TEXT PRIMARY KEY);",
     "CREATE TABLE IF NOT EXISTS status(name TEXT UNIQUE, icon TEXT);",
@@ -212,6 +212,15 @@ var deleteHabitRule = function(id) {
         })
     })
 }
+
+var changeActiveHabit = function(habit_rules_id, active) {
+    db.transaction(tx => {
+        tx.executeSql("UPDATE habit_rules SET active = ? WHERE id = ?", [active, habit_rules_id], (trans, res) => {}, (trans, err) => {
+            console.log(err)
+            return err
+        })
+    })
+} 
 
 var updateTracker = function(id, updated, value) {
     db.transaction(tx => {
@@ -409,6 +418,7 @@ export {
     incrementNumberOfTimesHabitRule,
     addHabitRule,
     deleteHabitRule,
+    changeActiveHabit,
     getTypes,
     addType,
     getDisplayType,

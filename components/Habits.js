@@ -4,7 +4,7 @@ import Title from './Title'
 import AddButton from './AddButton'
 import Habit from './Habit'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import {deleteHabitRule} from '../db'
+import {deleteHabitRulen} from '../db'
 
 function Habits({habits, setUptdateHabit, disabled}) {
 
@@ -16,10 +16,10 @@ function Habits({habits, setUptdateHabit, disabled}) {
 
     function deleteLocalHabit(habit_rules_id) {
         setLocalHabits(localHabits.filter(localHabit => localHabit.habit_rules_id != habit_rules_id))
-        deleteHabitRule(habit_rules_id)
+        //deleteHabitRule(habit_rules_id)  
     } 
 
-    const navigation = useNavigation()
+    const navigation = useNavigation() 
     const route = useRoute()
     
     const {day} = route.params
@@ -33,7 +33,7 @@ function Habits({habits, setUptdateHabit, disabled}) {
             </View>
             <FlatList 
                 data={localHabits}
-                renderItem={({item}) => <Habit deleteHabit={deleteLocalHabit} checked={ item.status ? true : false} name={item.name} habit_rules_id={item.habit_rules_id} key={localHabits.indexOf(item)}>{item.name}</Habit>}/>
+                renderItem={({item}) => <Habit deleteHabit={deleteLocalHabit} checked={ item.status ? true : false} name={item.name} active={item.active} habit_rules_id={item.habit_rules_id} key={localHabits.indexOf(item)}>{item.name}</Habit>}/>
         </View>
             
     ) 
