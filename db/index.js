@@ -273,6 +273,7 @@ var getAllHabitsByDate = async function(date) {
     var habit_rules = await getHabitRules()
     var habits = await getHabits()
     var allHabits = helper.getAllHabits(habit_rules, habits, date)
+    console.log(allHabits)
     return allHabits
 }
 

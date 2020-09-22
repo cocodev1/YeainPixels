@@ -1,7 +1,7 @@
 {
   "expo": {
     "packagerOpts": { "config": "metro.config.js", "sourceExts": ["js", "jsx", "svg", "svgx"] },
-    "name": "yip",
+    "name": "Year in Pixels",
     "slug": "yip",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "fr.simon.yip",
-      "versionCode": 2,
+      "versionCode": 3,
       "enableDangerousExperimentalLeanBuilds" : true
     },
     "web": {

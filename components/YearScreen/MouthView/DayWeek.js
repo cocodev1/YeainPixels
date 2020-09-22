@@ -5,7 +5,7 @@ import moment from 'moment'
 import {getDayByDate} from '../../../db'
 import { useNavigation } from '@react-navigation/native'
 
-function DayWeek({date}) {
+function DayWeek({date, isToUpdate}) {
     
     const navigation = useNavigation()
 
@@ -35,7 +35,7 @@ function DayWeek({date}) {
                 setDay(newDay)
             }
         })
-    }, [update])
+    }, [isToUpdate, update])
 
     useEffect(() => {
         if(day) {

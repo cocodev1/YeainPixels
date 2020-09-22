@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {FlatList} from 'react-native'
 import MouthWeekView from '../components/YearScreen/MouthView/MouthWeekView'
+import WeekNameDisplay from '../components/YearScreen/MouthView/WeekNameDisplay'
+import AddTodayPixelButton from '../components/AddTodayPixelButton'
 import moment from 'moment'
+import { useStore } from 'react-redux'
 
 function MouthViewScreen({route, navigation}) {
 
@@ -9,16 +12,18 @@ function MouthViewScreen({route, navigation}) {
 
     const {year} = route.params
 
+    const [isToUpdate, setToUpdate] = useState({})
+
     return(
         <>  
-            <WeekNameDisplay />
+            <WeekNameDisplay update={setToUpdate}/>
+            <AddTodayPixelButton isUpdate={isToUpdate} update={() => {setToUpdate('yes')}}/>
             <FlatList 
             data={mouths}
-            renderItem={({item}) => <MouthWeekView year={year} mouth={item} key={item}/>}
+            renderItem={({item}) => <MouthWeekView year={year} mouth={item} key={item} isToUpdate={isToUpdate}/>}
             initialScrollIndex={moment().format('M')-1}/>
         </>
     )
 }
-import WeekNameDisplay from '../components/YearScreen/MouthView/WeekNameDisplay'
 
 export default MouthViewScreen

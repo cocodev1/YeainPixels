@@ -33,7 +33,8 @@ export default function BottomNav({route, navigation}) {
         })}
         tabBarOptions={{
             activeTintColor: WHITE,
-            inactiveTintColor: '#777777'
+            inactiveTintColor: '#777777',
+            showLabel: false
         }}>
             <Tab.Screen name="Year" component={type == 'year' ? YearScreen : type == 'mouth' ? MouthViewScreen : LoadingScreen} initialParams={{year: year}}/>
             <Tab.Screen name="Stats" component={StatScreen} initialParams={{year: moment().year()}}/>

@@ -8,13 +8,13 @@ import { WHITE, MEDIUM_GRAY, DARK_GRAY } from '../styles/colors'
 import {BoxShadow} from 'react-native-shadow'
 
 
-function AddTodayPixelButton({update}) {
+function AddTodayPixelButton({update, isUpdate}) {
 
     const [isVisible, setVisible] = useState(true)
 
     const navigation = useNavigation()
     useEffect(() => {
-        getDayByDate().then(day => {
+        getDayByDate(moment().format('YYYY-M-D')).then(day => {
             if(day) {
                 setVisible(false)
             }
@@ -23,23 +23,26 @@ function AddTodayPixelButton({update}) {
             }
 
         })
-    })
+    }, [isUpdate])
 
     const today = moment()
-    const day = today.date()
-    const mouth = today.format('MM') 
+    const day = today.format('D')
+    const mouth = today.format('M') 
     const year = today.year()
     function open() {
         navigation.navigate('Fill Pixel', {day: day, mouth: mouth, year: year, update: update})
     }
-
-    return(
-        <TouchableOpacity style={styles.container} onPress={open}>
-            <MaterialCommunityIcons name="pencil" size={24} color={WHITE} />
-        </TouchableOpacity>
-  
-    )
-
+    if(isVisible) {
+        return(
+            <TouchableOpacity style={styles.container} onPress={open}>
+                <MaterialCommunityIcons name="pencil" size={24} color={WHITE} />
+            </TouchableOpacity>
+        )
+    }else {
+        return (
+            <View />
+        )
+    }
 }
 
 const styles = StyleSheet.create({

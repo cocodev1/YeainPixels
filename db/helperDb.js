@@ -252,19 +252,29 @@ function getAllHabits(habit_rules, habits, date) {
                 if(isInObjective(option, date) && habit_rule.active == 1) {
                     if(option.day.type == "every") {
                         var habit = getEveryHabitByHabitRule(habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        if(habit) {
+                            allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        }
                     }else if(option.day.type == "only") {
                         var habit = getOnlyHabitByHabitRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        if(habit) {
+                            allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        }
                     }else if(option.day.type == "week") {
                         var habit = getWeekHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        if(habit) {
+                            allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        }
                     }else if(option.day.type == "mouth") {
                         var habit = getMouthHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        if(habit) {
+                            allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        }
                     }else if(option.day.type == "repeating") {
                         var habit = getRepeatingHabitByRuleOption(option, habit_rule, date)
-                        allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        if(habit) {
+                            allHabits.push({...habit, habit_rules_id: habit_rule.id, active: 1, generated: true})
+                        }
                     }
                 }
             }

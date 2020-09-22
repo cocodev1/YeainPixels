@@ -6,7 +6,7 @@ import NoteInput from '../components/NoteInput'
 import Trackers from '../components/Trackers'
 import Habits  from '../components/Habits'
 import {connect} from 'react-redux'
-import {getAllHabitsByDate, addDay, deleteHabitRule} from '../db'
+import {getAllHabitsByDate, addDay, deleteHabitRule, getDayByDate, getDaysByYear} from '../db'
 import BigButton from '../components/BigButton'
 import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
@@ -43,6 +43,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
     function add() {
         setLoading(true)
+        getDaysByYear(date).then(da => console.log(da), 'QDUFH')
         addDay(date, emotionState, text)
         update({date, emotionState, text})
         setLoading(false)

@@ -5,13 +5,13 @@ import DayWeek from './DayWeek'
 import moment from 'moment'
 import { WHITE } from '../../../styles/colors'
 
-function MouthWeekView({mouth, year, update}) {
+function MouthWeekView({mouth, year, isToUpdate}) {
 
     var endNum = moment(mouth+'-'+year, 'MM-YYYY').endOf('month').date()
 
     var allDayObjects = Array.from(Array(endNum+1).keys()).filter(dayNum => dayNum != 0).map(dayNum => dayNum = {day: year+'-'+mouth+'-'+dayNum})
 
-    var allDayObjectsComponents = allDayObjects.map(dayObject => dayObject = <DayWeek key={dayObject.day} date={dayObject.day} update={update}/>)
+    var allDayObjectsComponents = allDayObjects.map(dayObject => dayObject = <DayWeek key={dayObject.day} date={dayObject.day} isToUpdate={isToUpdate}/>)
 
     return (
         <View style={styles.mainContainer}>

@@ -7,15 +7,13 @@ import {getDaysByYear} from '../../db'
 import DayDisplay from './DayDisplay'
 import AddTodayPixelButton from '../AddTodayPixelButton'
 
-function Year() {
+function Year({update, setUpdate}) {
 
     const route = useRoute()
 
     const {year} = route.params
 
     const [days, setDays] = useState([])
-
-    const [update, setUpdate] = useState({})
 
     useEffect(() => {
         getDaysByYear(year).then(newDays => {setDays(newDays); console.log(newDays)})

@@ -56,7 +56,7 @@ function Mouth({mouth, year, days, update}) {
             day={item}
             mouth={mouth}
             year={year}/>}
-        scrollEnabled={false}/>
+            scrollEnabled={false}/>
     ) 
 }
 

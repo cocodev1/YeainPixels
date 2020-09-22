@@ -14,6 +14,7 @@ export default function Nav() {
             background: colors.DARK_GRAY,
             card: colors.DARK_GRAY,
             text: colors.WHITE,
+            border: colors.DARK_GRAY
 
         }
     }
