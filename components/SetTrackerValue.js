@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, forwardRef } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { DARK_GRAY, WHITE, MEDIUM_GRAY} from '../styles/colors'
-import {updateTracker, addTracker, changeActiveTracker} from '../db'
+import {updateTracker, addTracker, changeActiveTracker, addTrackerSame} from '../db'
 import LineOption from "./LineOption";
 
 var SetTrackerValue = forwardRef((props, ref) =>  {
@@ -29,8 +29,10 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
 
     function onSubmitSame() {
         ref.current.close()
-        updateTracker(props.id, 1, props.value)
-        props.setValue(props.value)
+        addTrackerSame(props.name, props.icon, props.type, props.navDay, props.tracker_rules_id)
+        .then(value => {
+            props.setValue(value)
+        })
         props.setUpdated(1)
     }
 

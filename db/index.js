@@ -177,6 +177,37 @@ var addTracker = function(name, icon, value, type, date, tracker_rules_id) {
     })
 }
 
+var addTrackerSame = function(name, icon, type, date, tracker_rules_id) {
+    console.log({name, icon, type, date, tracker_rules_id})
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql("SELECT * FROM trackers WHERE tracker_rules_id = ?", [tracker_rules_id], (trans, res) => {
+                if(res.rows.length > 0) {
+                    var trackers = []
+                    for(var i = 0; i < res.rows.length; i++) {
+                        trackers.push(res.rows.item(i))
+                    }
+                    var {value} = trackers.reduce((previous, current) => {
+                        if(moment(previous, 'YYYY-MM-DD').isBefore(moment(current, 'YYYY-MM-DD'))) {
+                            return current
+                        }else {
+                            return previous
+                        }
+                    })
+                    addTracker(name, icon, value, type, date, tracker_rules_id)
+                    resolve(value)
+                }else {
+                    addTracker(name, icon, null, type, date, tracker_rules_id)
+                    resolve(null)
+                }
+            }, (trans, err) => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    })
+}
+
 var addTrackerRule = function(name, icon, type, date) {
     db.transaction(tx => {
         tx.executeSql("INSERT INTO tracker_rules (name, icon, type, begining) VALUES (?, ?, ?, ?);", [name, icon, type, date], (trans, res) => {}, (trans, err) => {
@@ -406,6 +437,7 @@ export {
     getTrackersByDate, 
     getRelativeTrackersByDate,
     addTracker,
+    addTrackerSame,
     addTrackerRule,
     updateTracker,
     getAllHabitsByDate,
