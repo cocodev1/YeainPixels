@@ -12,9 +12,8 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
     function onSubmit() {
         ref.current.close()
         if(props.generated == false) {
-            updateTracker(props.id, 1, text)
+            updateTracker(props.id, text)
         }else {
-            //console.log(props)
             addTracker(props.name, props.icon, text, props.type, props.navDay, props.tracker_rules_id)
         }
         props.setValue(text)
@@ -37,7 +36,7 @@ var SetTrackerValue = forwardRef((props, ref) =>  {
 
     function onSubmitNotToday() {
         ref.current.close()
-        updateTracker(props.id, 1, null)
+        addTracker(props.name, props.icon, null, props.type, props.navDay, props.tracker_rules_id)
         props.setValue("null")
         props.setUpdated(1)
     }

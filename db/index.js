@@ -170,7 +170,7 @@ var getRelativeTrackersByDate = async function(date) {
 
 var addTracker = function(name, icon, value, type, date, tracker_rules_id) {
     db.transaction(tx => {
-        tx.executeSql("INSERT INTO trackers (name, icon, value, type, day, tracker_rules_id) VALUES (?, ?, ?, ?, ?, ?);", [name, icon, value, type, date, tracker_rules_id], (trans, res) => {console.log('done')}, (trans, err) => {
+        tx.executeSql("INSERT INTO trackers (name, icon, value, type, day, tracker_rules_id) VALUES (?, ?, ?, ?, ?, ?);", [name, icon, value, type, date, tracker_rules_id], (trans, res) => {}, (trans, err) => {
             console.log(err)
             return err
         })
@@ -222,15 +222,10 @@ var changeActiveHabit = function(habit_rules_id, active) {
     })
 } 
 
-var updateTracker = function(id, updated, value) {
+var updateTracker = function(id, value) {
     db.transaction(tx => {
         if(value) {
-            tx.executeSql("UPDATE trackers SET value = ?, updated = ? WHERE id = ?;", [value, updated, id], (trans, res) => {}, (trans, err) => {
-                console.log(err)
-                return err
-            })
-        } else {
-            tx.executeSql("UPDATE trackers SET updated = ? WHERE id = ?;", [updated, id], (trans, res) => {}, (trans, err) => {
+            tx.executeSql("UPDATE trackers SET value = ? WHERE id = ?;", [value, id], (trans, res) => {}, (trans, err) => {
                 console.log(err)
                 return err
             })
@@ -273,7 +268,6 @@ var getAllHabitsByDate = async function(date) {
     var habit_rules = await getHabitRules()
     var habits = await getHabits()
     var allHabits = helper.getAllHabits(habit_rules, habits, date)
-    console.log(allHabits)
     return allHabits
 }
 

@@ -81,6 +81,9 @@ function Tracker(props) {
     function getValueToDisplay() {
         if(props.generated == true && (value == null || value == undefined)) {
             setValueToDisplay("Update it")
+        }else
+        if(value == null || value == "null"){
+            setValueToDisplay("Not this day")
         }else {
             setValueToDisplay(`${shortNumber(parseInt(value))} ${props.type}`)
         }
@@ -104,7 +107,11 @@ function Tracker(props) {
                 return <MaterialIcons name="watch-later" size={26} color={WHITE} />
             }
         }else {
-            return <MaterialIcons name="done" size={30} color={WHITE} />
+            if(value == null || value == "null") {
+                return <MaterialCommunityIcons name="close" size={30} color={WHITE} />
+            }else {
+                return <MaterialIcons name="done" size={30} color={WHITE} />
+            }
         }
     }
 

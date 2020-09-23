@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "fr.simon.yip",
-      "versionCode": 3,
+      "versionCode": 4,
       "enableDangerousExperimentalLeanBuilds" : true
     },
     "web": {
