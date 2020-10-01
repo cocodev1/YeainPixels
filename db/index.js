@@ -155,7 +155,7 @@ var getRelativeTrackersByDate = async function(date) {
     var trackerRules = await getTrackerRulesByDate(date)
     var trackerRule
     for (trackerRule of trackerRules) {
-        if(trackers.filter(tracker => tracker.tracker_rules_id == trackerRule.id).length >= 1) {
+        if(trackers.filter(tracker => tracker.tracker_rules_id == trackerRule.id).length > 0) {
             var newTracker = trackers.filter(tracker => tracker.tracker_rules_id == trackerRule.id)[0]
             relativeTrackers.push({...newTracker, generated: false, active: trackerRule.active})
         }else {
@@ -164,6 +164,7 @@ var getRelativeTrackersByDate = async function(date) {
             }
         }
     }
+    console.log(relativeTrackers, 'OOOOOOOOOO', trackers, 'AAAAAAAA', trackerRules)
     return relativeTrackers
     
 }
