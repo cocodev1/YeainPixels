@@ -49,11 +49,11 @@ function PixelScreen({route, navigation, dispatch}) {
 
     useLayoutEffect(() => {
         getPic(date).then(uri => setPic(uri))
-    })
+    }, [])
 
     return(
         <ScrollView>
-            <ImageDisplayer uri={pic} />
+            {pic ? <ImageDisplayer uri={pic} /> : null}
             <EmotionDisplay emotion={dayVal.emotion}/>
             <Note>{dayVal.note}</Note>
             <Trackers disabled={true}/>
