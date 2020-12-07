@@ -2,6 +2,7 @@ import React, {memo} from 'react'
 import {TouchableOpacity, Dimensions, StyleSheet, View, Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { WHITE } from '../../styles/colors'
+import * as Segment from 'expo-analytics-segment'
 
 function Pixel({color, year, mouth, day, isClickable, display, update}) {
 
@@ -20,6 +21,10 @@ function Pixel({color, year, mouth, day, isClickable, display, update}) {
     })
 
     function getNavigate() {
+        Segment.track({
+            "type": "track",
+            "event": "Pixel Opened",
+          })
         if(display) {
             return navigation.navigate('Pixel', {year: year, mouth: mouth, day: day})
         }else {
