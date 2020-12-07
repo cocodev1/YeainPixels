@@ -33,6 +33,10 @@ function LogoTitle({childrenTitle}) {
     );
   }
 
+function getNameForPixel(route) {
+   return ({title: moment(route.params.year+'-'+route.params.mouth+'-'+route.params.day, 'YYYY-MM-DD').format("MMM Do YYYY")})
+}
+
 export default function StackNav() {
 
     const viewYear = useRef()
@@ -49,8 +53,9 @@ export default function StackNav() {
                 headerRight: () => (<TypeDisplaySelector childrenTitle={getFocusedRouteNameFromRoute(route)}/>)
             })}/>
             <Stack.Screen name="Fill Pixel" component={FillPixelScreen} initialParams={{ day: 30, mouth: "07", year: "2020" }} 
-                options={({route}) => ({title: moment(route.params.year+'-'+route.params.mouth+'-'+route.params.day, 'YYYY-MM-DD').format("MMM Do YYYY")})}/>
-            <Stack.Screen name="Pixel" component={PixelScreen} />
+                options={({route}) => getNameForPixel(route)}/>
+            <Stack.Screen name="Pixel" component={PixelScreen} 
+                options={({route}) => getNameForPixel(route)}/>
             <Stack.Screen name="Add tracker" component={AddTrackerScreen} />
             <Stack.Screen name="Add Habit" component={AddHabitScreen} />
         </Stack.Navigator>

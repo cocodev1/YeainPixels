@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native'
 import {connect} from 'react-redux'
 import { WHITE, MEDIUM_GRAY } from '../styles/colors'
 
-function Checkbox({checked, color, colorState}) {
+function Checkbox({checked, color, colorState, setStatus}) {
     const styles = StyleSheet.create({
         checkbox: {
             padding: 5,

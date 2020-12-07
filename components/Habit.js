@@ -6,6 +6,7 @@ import { WHITE } from '../styles/colors'
 import {addHabit, incrementNumberOfTimesHabitRule, changeActiveHabit} from '../db'
 import { useRoute } from '@react-navigation/native'
 import TrashCan from './TrashCan'
+import FloatingHabitModal from './FloatingHabitModal'
 
 function Habit({children, checked, name, habit_rules_id, active, deleteHabit}) {
 
@@ -18,9 +19,11 @@ function Habit({children, checked, name, habit_rules_id, active, deleteHabit}) {
     const [isCheked, setChecked] = useState(checked)
     const [isActive, setActive] = useState(active)
 
-    function add() {
+    const [isModalShow, setShowModal] = useState(false)
+
+    function add(status) {
         setChecked(true)
-        addHabit(date, habit_rules_id, name, 'done')
+        addHabit(date, habit_rules_id, name, status)
         incrementNumberOfTimesHabitRule(habit_rules_id)
     }
 
@@ -30,8 +33,11 @@ function Habit({children, checked, name, habit_rules_id, active, deleteHabit}) {
     }
 
     return (
-        <TouchableOpacity onPress={add} style={styles.habit}>
-            <Checkbox checked={isCheked}/>
+        <TouchableOpacity onPress={() => setShowModal(!isModalShow)} style={styles.habit}>
+            <View>
+                <Checkbox checked={isCheked}/>
+                {isModalShow ? <View style={{position: 'relative'}}><FloatingHabitModal add={add}/></View> : null}
+            </View>
             <Text style={styles.text}>{children}</Text>
             <View style={{position: 'absolute', right: 0}}>
                 <ActiveSwitch defaultValue={isActive == 1 ? true : false} onPressActive={disable} onPressDesactive={disable}/>

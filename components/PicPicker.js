@@ -6,36 +6,20 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { WHITE, DARK_GRAY } from '../styles/colors';
 import {addPic} from '../db'
 
-var PicPicker = forwardRef(({setPic, date}, ref) =>  {
+var PicPicker = forwardRef(({setPic, date, pics, isLoading}, ref) =>  {
 
-    const [pics, setPics] = useState([])
+    const [p, setP] = useState([])
 
-    const [isLoading, setLoading] = useState(true)
-
-    useEffect(() => {
-        MediaLibrary.requestPermissionsAsync().then(perm => {
-            if(perm.granted) {
-                MediaLibrary.getPermissionsAsync().then(permission => {
-                    if(permission.granted) {
-                        MediaLibrary.getAssetsAsync({sortBy: [MediaLibrary.SortBy.creationTime]}).then(res => {
-                            var picUris = []
-                            for (const photo of res.assets) {
-                                picUris.push(photo.uri)
-                            }
-                            setPics(picUris)
-                            setLoading(false)
-                        })
-                    }
-                })
-            }
-        })
-    }, [])
-
+    console.log(pics)
     function press(uri) {
         setPic(uri)
         addPic(date, uri)
         ref.current.close()
     }
+
+    useEffect(() => {
+        setP(pics)
+    }, [pics.length, isLoading, ref])
 
     return(
         <RBSheet
@@ -54,7 +38,7 @@ var PicPicker = forwardRef(({setPic, date}, ref) =>  {
             {isLoading ? 
             <ActivityIndicator color={WHITE} size='large'/> : 
             <FlatList 
-            data={pics}
+            data={p}
             keyExtractor={(item) => {return item.image}}
             renderItem={({item}) => <Pic onPress={press} source={item} key={item} date={date}/>}
             numColumns={4}/>}

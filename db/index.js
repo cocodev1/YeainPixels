@@ -36,6 +36,8 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, day DATE, name TEXT, status TEXT, habit_rules_id INTEGER, UNIQUE(habit_rules_id, day));",
     "CREATE TABLE IF NOT EXISTS types (name TEXT PRIMARY KEY);",
     "CREATE TABLE IF NOT EXISTS status(name TEXT UNIQUE, icon TEXT);",
+    "INSERT INTO status(name, icon) VALUES ('cc', 'baguette');",
+    "INSERT INTO status(name, icon) VALUES ('lorem ipsim ipsum', 'baguette');",
     "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
@@ -164,9 +166,26 @@ var getRelativeTrackersByDate = async function(date) {
             }
         }
     }
-    console.log(relativeTrackers, 'OOOOOOOOOO', trackers, 'AAAAAAAA', trackerRules)
     return relativeTrackers
     
+}
+
+var getTrackerByYear = function(year) {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql("SELECT * FROM trackers", [], (trans, res) => {
+                var trackers = []
+                for(var i = 0; i < res.rows.length; i++) {
+                    trackers.push(res.rows.item(i))
+                }
+                trackers = trackers.filter(tracker => moment(tracker.day, 'YYYY-MM-DD').year() == year)
+                resolve(trackers)
+            }, (trans, err) => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    })
 }
 
 var addTracker = function(name, icon, value, type, date, tracker_rules_id) {
@@ -179,7 +198,6 @@ var addTracker = function(name, icon, value, type, date, tracker_rules_id) {
 }
 
 var addTrackerSame = function(name, icon, type, date, tracker_rules_id) {
-    console.log({name, icon, type, date, tracker_rules_id})
     return new Promise((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql("SELECT * FROM trackers WHERE tracker_rules_id = ?", [tracker_rules_id], (trans, res) => {
@@ -425,6 +443,27 @@ var getAllMoods = function(year) {
     })
 }
 
+var getAllStatus = function() {
+    return new Promise((resolve, reject) =>  {
+        db.transaction(tx => {
+            tx.executeSql("SELECT * FROM status", [], (trans, res) => {
+                if(res.rows.length >= 1) {
+                    var allStatus = []
+                    for(var i = 0; i < res.rows.length; i++) {
+                        allStatus.push(res.rows.item(i))
+                    }
+                    resolve(allStatus)
+                }else {
+                    resolve([])
+                }
+            }, (trans, err) => {
+                print(err)
+                reject(err)
+            })
+        })
+    })
+}
+
 var getDb = function() {
     return db
 }
@@ -437,6 +476,7 @@ export {
     getDaysByYear,
     getTrackersByDate, 
     getRelativeTrackersByDate,
+    getTrackerByYear,
     addTracker,
     addTrackerSame,
     addTrackerRule,
@@ -456,5 +496,6 @@ export {
     getPic,
     getAllMoods,
     generateFullYear,
+    getAllStatus,
     getDb
 }

@@ -13,6 +13,7 @@ import { MEDIUM_GRAY } from '../styles/colors'
 import PicPicker from '../components/PicPicker'
 import {getPic} from '../db'
 import { useNavigation } from '@react-navigation/native'
+import * as MediaLibrary from 'expo-media-library';
 
 function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
@@ -60,21 +61,45 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
     const [pic, setPic] = useState(null)
 
+    const [pics, setPics] = useState([])
+
+    const [isLoading2, setLoading2] = useState(true)
+
     useEffect(() => {
         getPic(date).then(pic => {
             setPic(pic)
         })
     }, [])
 
+    function autoPic() {
+        MediaLibrary.requestPermissionsAsync().then(perm => {
+            if(perm.granted) {
+                MediaLibrary.getPermissionsAsync().then(permission => {
+                    if(permission.granted) {
+                        MediaLibrary.getAssetsAsync({sortBy: [MediaLibrary.SortBy.creationTime]}).then(res => {
+                            var picUris = []
+                            for (const photo of res.assets) {
+                                picUris.push(photo.uri)
+                            }
+                            setPics(picUris)
+                            setLoading2(false)
+                        })
+                        refRBSheet.current.open()
+                    }
+                })
+            }
+        })
+    }
+
     return(
         <ScrollView> 
-            <ImagePicker pic={pic} date={date} onPress={() => refRBSheet.current.open()}/>
+            <ImagePicker pic={pic} date={date} onPress={() => autoPic()}/>
             <EmotionSelector />
             <NoteInput text={text} setText={setText}/>
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
             <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
             <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
-            <PicPicker ref={refRBSheet} setPic={setPic} date={date}/>
+            <PicPicker ref={refRBSheet} setPic={setPic} date={date} pics={pics} isLoading={isLoading2}/>
         </ScrollView>
     )
 }
