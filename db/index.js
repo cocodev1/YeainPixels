@@ -1,6 +1,8 @@
 import * as SQLite from 'expo-sqlite';
 import * as helper from './helperDb'
 import moment from 'moment'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
 
 var db = SQLite.openDatabase('db')
 
@@ -41,6 +43,7 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
+    "CREATE TABLE IF NOT EXISTS uuid(uuid TEXT);"
 ]
 
 var dropTablesString = [
@@ -52,14 +55,44 @@ var dropTablesString = [
     "DROP TABLE types;",
     "DROP TABLE status;",
     "DROP TABLE pics;",
-    "DROP TABLE display_type;"
+    "DROP TABLE display_type;",
+    "DROP TABLE uuid;"
 ]
 
-var createTables = function() {
-    createTablesString.forEach(string => {
+var createTables = function() { 
+    return new Promise((resolve, reject) => {
+        createTablesString.forEach(async string => {
+            db.transaction(tx => {
+                tx.executeSql(string, [], (trans, res) => {
+                }, (trans, err) => {console.log(err, string)});
+            })
+        })
+        resolve('')
+    })
+}
+
+var addUuid = function() {
+    return new Promise((resolve, reject) => { 
         db.transaction(tx => {
-            tx.executeSql(string, [], (trans, res) => {
-            }, (trans, err) => {console.log(err, string)});
+            tx.executeSql('SELECT * FROM uuid', {}, (trans, res) => {
+                if(res.rows.length < 1) {
+                    db.transaction(tx => {
+                        tx.executeSql('INSERT INTO uuid (uuid) VALUES (?);', [uuidv4()], (trans, res) => {resolve('added')}, (trans, err) => console.log(err))
+                    })
+                }else {
+                    resolve('')
+                }
+            }, (trans, err) => console.log(err))
+        })
+    })
+}
+ 
+var getUuid = function() {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql('SELECT * FROM uuid;', [], (trans, res) => {
+                resolve(res.rows.item(0).uuid)
+            })
         })
     })
 }
@@ -470,6 +503,8 @@ var getDb = function() {
 
 export {
     createTables, 
+    addUuid,
+    getUuid,
     dropTables, 
     getDayByDate, 
     addDay,

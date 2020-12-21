@@ -3,10 +3,16 @@ import { View, ScrollView } from 'react-native'
 import Year from '../components/YearScreen/Year'
 import MouthDisplay from '../components/YearScreen/MouthDisplay'
 import AddTodayPixelButton from '../components/AddTodayPixelButton'
+import { useFocusEffect } from '@react-navigation/native'
+import * as Segment from 'expo-analytics-segment'
 
 export default function YearScreen() {
 
     const [update, setUpdate] = useState({})
+
+    useFocusEffect(() => {
+        Segment.screen('Year Screen')
+    })
 
     return(
         <View>

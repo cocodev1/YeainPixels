@@ -12,8 +12,9 @@ import changeColor from '../redux/actions/changeColor'
 import { MEDIUM_GRAY } from '../styles/colors'
 import PicPicker from '../components/PicPicker'
 import {getPic} from '../db'
-import { useNavigation } from '@react-navigation/native'
-import * as MediaLibrary from 'expo-media-library';
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import * as MediaLibrary from 'expo-media-library'
+import * as Segment from 'expo-analytics-segment'
 
 function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
@@ -22,6 +23,11 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     useEffect(() => {
     dispatch(changeColor(MEDIUM_GRAY, null)) 
     }, [])
+
+    useFocusEffect(() => {
+        Segment.screen('Fill Pixel Screen')
+        console.log('called')
+    })
 
     const [text, setText] = useState('')
     const [newTrackers, setNewTrackers] = useState(null)
@@ -72,6 +78,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     }, [])
 
     function autoPic() {
+        Segment.trackWithProperties('add pic', {day: year+'-'+mouth+'-'+day})
         MediaLibrary.requestPermissionsAsync().then(perm => {
             if(perm.granted) {
                 MediaLibrary.getPermissionsAsync().then(permission => {

@@ -10,7 +10,6 @@ var PicPicker = forwardRef(({setPic, date, pics, isLoading}, ref) =>  {
 
     const [p, setP] = useState([])
 
-    console.log(pics)
     function press(uri) {
         setPic(uri)
         addPic(date, uri)

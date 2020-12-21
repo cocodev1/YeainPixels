@@ -10,7 +10,7 @@ const NoteInput = function({text , setText, placeholder}) {
         <KeyboardAvoidingView behavior="padding" behavior="position" keyboardVerticalOffset={10}>
                 <View style={isFocused ? style.focused : undefined} />
                 <View style={style.view}>
-                    <TextInput style={style.textInput} placeholder={placeholder ? placeholder : "What happened ?"} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} onEndEditing={() => setFocused(false)} defaultValue={text} onChangeText={(text) => {setText(text)}}/>
+                    <TextInput style={style.textInput} placeholder={placeholder ? placeholder : "What happened ?"} placeholderTextColor="#AAAAAA" onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} onEndEditing={() => setFocused(false)} defaultValue={text} onChangeText={(text) => {setText(text)}}/>
                 </View>
         </KeyboardAvoidingView>
     )

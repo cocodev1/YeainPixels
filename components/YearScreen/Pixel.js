@@ -21,10 +21,7 @@ function Pixel({color, year, mouth, day, isClickable, display, update}) {
     })
 
     function getNavigate() {
-        Segment.track({
-            "type": "track",
-            "event": "Pixel Opened",
-          })
+        Segment.trackWithProperties('Open from year', {'year': year})
         if(display) {
             return navigation.navigate('Pixel', {year: year, mouth: mouth, day: day})
         }else {
