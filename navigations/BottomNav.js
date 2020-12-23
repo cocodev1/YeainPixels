@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import moment from 'moment'
 import { FontAwesome5 } from '@expo/vector-icons'; 
@@ -12,8 +12,15 @@ const Tab = createBottomTabNavigator();
 
 export default function BottomNav({route, navigation}) {
     const {type} = route.params
+    const {year} = route.params
 
-    const year = moment().year()
+    const [y, setY] = useState(year)
+
+    useEffect(() => {
+        console.log(year)
+        navigation.setParams({...route.params, year})
+        setY(year)
+    }, [year])
 
     return(
         <Tab.Navigator initialRouteName={'Year'}
@@ -36,7 +43,7 @@ export default function BottomNav({route, navigation}) {
             inactiveTintColor: '#777777',
             showLabel: false
         }}>
-            <Tab.Screen name="Year" component={type == 'year' ? YearScreen : type == 'mouth' ? MouthViewScreen : LoadingScreen} initialParams={{year: year}}/>
+            <Tab.Screen name="Year" component={type == 'year' ? YearScreen : type == 'mouth' ? MouthViewScreen : LoadingScreen} initialParams={{year: y}}/>
             <Tab.Screen name="Stats" component={StatScreen} initialParams={{year: moment().year()}}/>
             <Tab.Screen name="Account" component={ProfilScreen} />
         </Tab.Navigator>

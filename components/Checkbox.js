@@ -34,7 +34,7 @@ function Checkbox({checked, color, colorState, setStatus}) {
 
 const mapStateToProps = (state) => {
     return {
-        colorState: state.color
+        colorState: state.colorReducer.color
     }
 }
 export default connect(mapStateToProps)(Checkbox) 

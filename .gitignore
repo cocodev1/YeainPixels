@@ -14,3 +14,4 @@ assets/*.apk
 ios/
 snapshots/
 android/
+google-services.json

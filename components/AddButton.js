@@ -29,7 +29,7 @@ function AddTrackerButton(props) {
 
 const mapStateToProps = (state) => {
     return {
-        colorState: state.color
+        colorState: state.colorReducer.color
     }
 }
 export default connect(mapStateToProps)(AddTrackerButton)

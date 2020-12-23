@@ -42,8 +42,8 @@ const style = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        colorState: state.color,
-        emotionState: state.emotion
+        colorState: state.colorReducer.color,
+        emotionState: state.colorReducer.emotion
     }
 }
 export default connect(mapStateToProps)(Emotion)

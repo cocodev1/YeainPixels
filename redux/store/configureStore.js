@@ -1,4 +1,4 @@
 import {createStore} from 'redux'
-import colorReducer from '../reducers/colorReducer'
+import reducer from '../reducers/index'
 
-export default createStore(colorReducer)
+export default createStore(reducer)

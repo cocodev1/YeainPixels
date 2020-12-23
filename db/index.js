@@ -497,6 +497,24 @@ var getAllStatus = function() {
     })
 }
 
+var getYears = function() {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql("SELECT day FROM days", [], (trans, res) => {
+                var years = []
+                for(var i = 0; i < res.rows.length; i++) {
+                    var date = res.rows.item(i).day
+                    var year = moment(date, 'YYYY-MM-DD').format('YYYY')
+                    if(!years.includes(year)) {
+                        years.push(year)
+                    }
+                }
+                resolve(years)
+            })
+        })
+    })
+}
+
 var getDb = function() {
     return db
 }
@@ -532,5 +550,6 @@ export {
     getAllMoods,
     generateFullYear,
     getAllStatus,
+    getYears,
     getDb
 }

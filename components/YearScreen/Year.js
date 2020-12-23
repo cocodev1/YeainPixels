@@ -16,8 +16,8 @@ function Year({update, setUpdate}) {
     const [days, setDays] = useState([])
 
     useEffect(() => {
-        getDaysByYear(year).then(newDays => {setDays(newDays); console.log(newDays)})
-    }, [update])
+        getDaysByYear(year).then(newDays => {setDays(newDays)})
+    }, [update, route])
 
     const nums = Array.from(Array(13).keys()).filter(num => num != 0)
 

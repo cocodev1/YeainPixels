@@ -25,8 +25,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     }, [])
 
     useFocusEffect(() => {
-        Segment.screen('Fill Pixel Screen')
-        console.log('called')
+        Segment.screen('Fill Pixel')
     })
 
     const [text, setText] = useState('')
@@ -49,8 +48,8 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     const [isLoading, setLoading] = useState(false)
 
     function add() {
+        Segment.trackWithProperties('Add pixel', {pixel: date, pic: pic, emo: emotionState, text: text})
         setLoading(true)
-        getDaysByYear(date).then(da => console.log(da), 'QDUFH')
         addDay(date, emotionState, text)
         update({date, emotionState, text})
         setLoading(false)
@@ -113,8 +112,8 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
 const mapStateToProps = (state) => {
     return {
-        colorState: state.color,
-        emotionState: state.emotion
+        colorState: state.colorReducer.color,
+        emotionState: state.colorReducer.emotion
     }
 }
 export default connect(mapStateToProps)(FillPixelScreen)

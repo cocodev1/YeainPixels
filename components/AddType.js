@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, forwardRef } from "react";
-import { View, TouchableOpacity, Text, TextInput, StyleSheet, Keyboard } from "react-native";
-import RBSheet from "react-native-raw-bottom-sheet";
+import React, { useRef, useState, useEffect, forwardRef } from "react"
+import { View, TouchableOpacity, Text, TextInput, StyleSheet, Keyboard } from "react-native"
+import RBSheet from "react-native-raw-bottom-sheet"
 import { DARK_GRAY, WHITE, MEDIUM_GRAY} from '../styles/colors'
 import {addType} from '../db'
 

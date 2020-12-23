@@ -138,7 +138,7 @@ function Tracker(props) {
 
 const mapStateToProps = (state) => {
     return {
-        color: state.color,
+        color: state.colorReducer.color,
     }
 }
 export default connect(mapStateToProps)(Tracker)

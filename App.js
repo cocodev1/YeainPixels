@@ -7,7 +7,6 @@ import AppSplashAnimated from './AppSplashAnimated'
 import * as Segment from 'expo-analytics-segment'
 
 export default function App() {
-  try {
     createTables()
       .then(() => {
         addUuid().then(res => {
@@ -17,12 +16,6 @@ export default function App() {
           })
         })
       })
-    } catch (error) {
-      Segment.identify('error')
-      Segment.trackWithProperties('ERRRRROOR', {'err' : error})
-    }
-      
-
 
   return (
     <AppSplashAnimated>

@@ -1,37 +1,19 @@
-import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
-import {Text} from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack';
+import React, {useEffect, useRef, } from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import BottomNav from './BottomNav'
 import FillPixelScreen from '../scenes/FillPixelScreen'
 import AddTrackerScreen from '../scenes/AddTrackerScreen'
-import AddHabitScreen from '../scenes/AddHabitScreen';
+import AddHabitScreen from '../scenes/AddHabitScreen'
 import PixelScreen from '../scenes/PixelScreen'
 
-import moment, { isMoment } from 'moment'
+import moment from 'moment'
 import TypeDisplaySelector from '../components/TypeDisplaySelector'
-import { WHITE } from '../styles/colors';
-import { getDisplayType } from '../db';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import LogoTitle from '../components/LogoTitle'
+import { getDisplayType, getYears } from '../db'
+import { getFocusedRouteNameFromRoute} from '@react-navigation/native'
 
-const Stack = createStackNavigator();
-
-function LogoTitle({childrenTitle}) {
-    if(childrenTitle) {
-        if(childrenTitle == 'Year') {
-            return (
-                <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{moment().format('YYYY')}</Text>
-            )
-        }else {
-            return (
-                <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{childrenTitle}</Text>
-            )
-        }
-    }
-    return (
-      <Text style={{color: WHITE, fontWeight: '700', fontSize: 22}}>{moment().format('YYYY')}</Text>
-    );
-  }
+const Stack = createStackNavigator()
 
 function getNameForPixel(route) {
    return ({title: moment(route.params.year+'-'+route.params.mouth+'-'+route.params.day, 'YYYY-MM-DD').format("MMM Do YYYY")})
@@ -45,9 +27,10 @@ export default function StackNav() {
         getDisplayType().then(type => viewYear.current = type)
     }, [])
 
+
     return(
         <Stack.Navigator initialRouteName='Year in Pixels'>
-            <Stack.Screen name="Year in Pixels" component={BottomNav} initialParams={{type: viewYear}}
+            <Stack.Screen name="Year in Pixels" component={BottomNav} initialParams={{type: viewYear, year: moment().format('YYYY')}}
             options={({route}) => ({
                 headerTitle: () => <LogoTitle childrenTitle={getFocusedRouteNameFromRoute(route)}/>,
                 headerRight: () => (<TypeDisplaySelector childrenTitle={getFocusedRouteNameFromRoute(route)}/>)
