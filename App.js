@@ -7,6 +7,7 @@ import AppSplashAnimated from './AppSplashAnimated'
 import * as Segment from 'expo-analytics-segment'
 
 export default function App() {
+    //dropTables()
     createTables()
       .then(() => {
         addUuid().then(res => {

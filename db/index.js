@@ -35,11 +35,12 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS trackers(id INTEGER PRIMARY KEY AUTOINCREMENT, tracker_rules_id INTEGER, name TEXT, icon TEXT, value INT, type INTEGER, day DATE);",
     //"CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, status INTEGER, day DATE, option TEXT, active INTEGER DEFAULT 1);",
     "CREATE TABLE IF NOT EXISTS habit_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, begining DATE, name TEXT, option TEXT, active INTEGER DEFAULT 1);",
-    "CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, day DATE, name TEXT, status TEXT, habit_rules_id INTEGER, UNIQUE(habit_rules_id, day));",
+    "CREATE TABLE IF NOT EXISTS habits(id INTEGER PRIMARY KEY AUTOINCREMENT, day DATE, name TEXT, status TEXT, status_icon TEXT, habit_rules_id INTEGER, UNIQUE(habit_rules_id, day));",
     "CREATE TABLE IF NOT EXISTS types (name TEXT PRIMARY KEY);",
     "CREATE TABLE IF NOT EXISTS status(name TEXT UNIQUE, icon TEXT);",
-    "INSERT INTO status(name, icon) VALUES ('cc', 'baguette');",
-    "INSERT INTO status(name, icon) VALUES ('lorem ipsim ipsum', 'baguette');",
+    "INSERT INTO status(name, icon) VALUES ('Done', 'check');",
+    "INSERT INTO status(name, icon) VALUES ('Reported', 'arrow-right');",
+    "INSERT INTO status(name, icon) VALUES ('Canceled', 'close');",
     "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
@@ -373,13 +374,37 @@ var incrementNumberOfTimesHabitRule = function(habit_rules_id) {
     })
 }
 
-var addHabit = async function(date, habit_rules_id, name, status) {
+//Depreciated
+/*var addHabit = async function(date, habit_rules_id, name, status, status_icon) {
     db.transaction(tx => {
-        tx.executeSql("INSERT OR IGNORE INTO habits (day, name, status, habit_rules_id) VALUES (?, ?, ?, ?);", [date, name, status, habit_rules_id], async (trans, res) => {
+        tx.executeSql("INSERT OR IGNORE INTO habits (day, name, status, habit_rules_id, status_icon) VALUES (?, ?, ?, ?, ?);", [date, name, status, habit_rules_id, status_icon], async (trans, res) => {
             return res
         }, (trans, err) => {
             console.log(err)
             return err
+        })
+    })
+}*/
+
+var addHabit = function(date, habit_rules_id, name, status, status_icon) {
+    db.transaction(tx => {
+        tx.executeSql("SELECT * FROM habits WHERE day = ? AND name = ?", [date, name], (trans, res) => {
+            if(res.rows.length == 0) {
+                db.transaction(tx => {
+                    tx.executeSql("INSERT INTO habits (day, name, status, habit_rules_id, status_icon) VALUES (?, ?, ?, ?, ?);", [date, name, status, habit_rules_id, status_icon], async (trans, res) => {
+                        return res
+                    }, (trans, err) => {
+                        console.log(err)
+                        return err
+                    })
+                })
+            }else {
+                db.transaction(tx => {
+                    tx.executeSql("UPDATE habits SET status = ?, status_icon = ? WHERE day = ? AND name = ?", [status, status_icon, date, name], (trans, res) => {}, (trans, err) => {
+                        console.log(err)
+                    })
+                })
+            }
         })
     })
 }

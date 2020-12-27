@@ -33,7 +33,7 @@ function Habits({habits, setUptdateHabit, disabled}) {
             </View>
             <FlatList 
                 data={localHabits}
-                renderItem={({item}) => <Habit deleteHabit={deleteLocalHabit} checked={ item.status ? true : false} name={item.name} active={item.active} habit_rules_id={item.habit_rules_id} key={localHabits.indexOf(item)}>{item.name}</Habit>}/>
+                renderItem={({item}) => <Habit deleteHabit={deleteLocalHabit} actualStatus={item.status || null} status_icon={item.status_icon ? item.status_icon : null} checked={ item.status ? true : false} name={item.name} active={item.active} habit_rules_id={item.habit_rules_id} key={localHabits.indexOf(item)}>{item.name}</Habit>}/>
         </View>
             
     ) 

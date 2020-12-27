@@ -48,7 +48,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     const [isLoading, setLoading] = useState(false)
 
     function add() {
-        Segment.trackWithProperties('Add pixel', {pixel: date, pic: pic, emo: emotionState, text: text})
+        Segment.trackWithProperties('Add pixel', {pixel: date, pic: pic, emo: emotionState})
         setLoading(true)
         addDay(date, emotionState, text)
         update({date, emotionState, text})

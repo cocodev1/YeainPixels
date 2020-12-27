@@ -22,8 +22,8 @@
     },
     "android": {
       "package": "fr.simon.yip",
-      "versionCode": 22,
-      "enableDangerousExperimentalLeanBuilds" : true
+      "versionCode": 24,
+      "enableDangerousExperimentalLeanBuilds" : false
     },
     "web": {
       "favicon": "./assets/favicon.png"
