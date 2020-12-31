@@ -44,7 +44,9 @@ var createTablesString = [
     "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
-    "CREATE TABLE IF NOT EXISTS uuid(uuid TEXT);"
+    "CREATE TABLE IF NOT EXISTS uuid(uuid TEXT);",
+    "ALTER TABLE habits ADD COLUMN status TEXT;",
+    "ALTER TABLE habits ADD COLUMN status_icon TEXT;"
 ]
 
 var dropTablesString = [
