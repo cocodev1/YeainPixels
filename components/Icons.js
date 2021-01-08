@@ -4,7 +4,7 @@ import iconsData from '../MaterialCommunityIcons.json'
 import IconRow from './IconRow'
 import Title from './Title'
 import { MaterialIcons } from '@expo/vector-icons'; 
-import { WHITE } from '../styles/colors'
+import { MEDIUM_GRAY, WHITE } from '../styles/colors'
 
 function Icons({iconName, setIconName}) {
     
@@ -17,7 +17,7 @@ function Icons({iconName, setIconName}) {
     }
     const [icons, setIcons] = useState(iconNamesSplit)
     const [searchText, setSearchText] = useState('')
-    const [iconSelected, setIconSelected] = useState('')
+    //const [iconSelected, setIconSelected] = useState('')
 
     useEffect(() => {
 
@@ -39,7 +39,7 @@ function Icons({iconName, setIconName}) {
                 <Title>Icons</Title>
                 <View style={styles.searchBar}>
                     <MaterialIcons name="search" size={34} color={WHITE} />
-                    <TextInput placeholder="Search" style={styles.searchBarInput} defaultValue={searchText} onChangeText={(text) => setSearchText(text)}/>
+                    <TextInput placeholder="Search" style={styles.searchBarInput} defaultValue={searchText} onChangeText={(text) => setSearchText(text)} placeholderTextColor={MEDIUM_GRAY}/>
                 </View>
             </View>
             <FlatList 

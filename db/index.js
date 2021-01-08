@@ -46,7 +46,15 @@ var createTablesString = [
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
     "CREATE TABLE IF NOT EXISTS uuid(uuid TEXT);",
     "ALTER TABLE habits ADD COLUMN status TEXT;",
-    "ALTER TABLE habits ADD COLUMN status_icon TEXT;"
+    "ALTER TABLE habits ADD COLUMN status_icon TEXT;",
+    "INSERT INTO types (name) VALUES (' ');",
+    "INSERT INTO types (name) VALUES ('follows');",
+    "INSERT INTO types (name) VALUES ('$');",
+    "INSERT INTO types (name) VALUES ('€');",
+    "INSERT INTO types (name) VALUES ('km');",
+    "INSERT INTO types (name) VALUES ('minutes');",
+    "INSERT INTO types (name) VALUES ('words');",
+    "INSERT INTO types (name) VALUES ('pages');",
 ]
 
 var dropTablesString = [

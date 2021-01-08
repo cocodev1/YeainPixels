@@ -6,7 +6,7 @@ import AddTodayPixelButton from '../components/AddTodayPixelButton'
 import { useFocusEffect } from '@react-navigation/native'
 import * as Segment from 'expo-analytics-segment'
 
-export default function YearScreen() {
+function YearScreen() {
 
     const [update, setUpdate] = useState({})
 
@@ -24,3 +24,5 @@ export default function YearScreen() {
         </View>
     )
 }
+
+export default YearScreen

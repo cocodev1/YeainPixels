@@ -14,8 +14,9 @@ function Trackers({newTrackers, setNewTrackers, disabled}) {
 
     const {day} = route.params
     const {mouth} = route.params
+    const {year} = route.params
 
-    const date = "2020-" + mouth.toString() + "-" + day.toString()
+    const date = year.toString() + "-" + mouth.toString() + "-" + day.toString()
 
     const [trackers, setTrackers] = useState([])
 

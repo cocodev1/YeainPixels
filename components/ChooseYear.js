@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from "react"
-import { FlatList, TouchableOpacity, StyleSheet, Text } from "react-native"
+import { FlatList, TouchableOpacity, StyleSheet, Text, View, ActivityIndicator } from "react-native"
 
 import RBSheet from 'react-native-raw-bottom-sheet'
 import { getYears } from "../db"
@@ -11,6 +11,8 @@ import { connect }  from 'react-redux'
 import changeYear from "../redux/actions/changeYear"
 
 var ChooseYear = forwardRef(({year, dispatch}, ref) =>  {
+
+    const [loading, setLoading] = useState(false)
 
     const styles = StyleSheet   .create({
         container: {
@@ -41,32 +43,34 @@ var ChooseYear = forwardRef(({year, dispatch}, ref) =>  {
     }, [])
 
     return (
-        <RBSheet
-        ref={ref}
-        closeOnPressMask={true}
-        height={100}
-        customStyles={{
-            wrapper: {
-            },
-            container: {
-                borderTopLeftRadius: 30,
-                borderTopRightRadius: 30,
-                backgroundColor: DARK_GRAY,
-                opacity: 1,
-            },
-        }}
-        >
-                <FlatList
-                data={years}
-                renderItem={({item}) => {
-                    return (
-                        <TouchableOpacity key={item} onPress={() => {dispatch(changeYear(item)); ref.current.close()}} style={{justifyContent: 'center', padding: 10, flexDirection: 'row'}}>
-                            <Text style={{...styles.text, color: item == year ? WHITE : MEDIUM_GRAY, fontSize: item == year ? 28 : styles.text.fontSize}}>{item}</Text>
-                        </TouchableOpacity>
-                    )
-                }}
-                keyExtractor={({item}) => item}/>
+        <View>
+            <RBSheet
+            ref={ref}
+            closeOnPressMask={true}
+            height={100}
+            customStyles={{
+                wrapper: {
+                },
+                container: {
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30,
+                    backgroundColor: DARK_GRAY,
+                    opacity: 1,
+                },
+            }}
+            >
+                    <FlatList
+                    data={years}
+                    renderItem={({item}) => {
+                        return (
+                            <TouchableOpacity key={item} onPress={() => {dispatch(changeYear(item)); ref.current.close()}} style={{justifyContent: 'center', padding: 10, flexDirection: 'row'}}>
+                                <Text style={{...styles.text, color: item == year ? WHITE : MEDIUM_GRAY, fontSize: 28 }}>{item}</Text>
+                            </TouchableOpacity>
+                        )
+                    }}
+                    keyExtractor={({item}) => item}/>
         </RBSheet>
+    </View>
     )
 
 })

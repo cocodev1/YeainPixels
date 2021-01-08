@@ -6,12 +6,11 @@ import Mouth from './Mouth'
 import {getDaysByYear} from '../../db'
 import DayDisplay from './DayDisplay'
 import AddTodayPixelButton from '../AddTodayPixelButton'
+import { connect } from 'react-redux'
 
-function Year({update, setUpdate}) {
+function Year({update, setUpdate, year}) {
 
     const route = useRoute()
-
-    const {year} = route.params
 
     const [days, setDays] = useState([])
 
@@ -49,4 +48,9 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Year
+const mapStateToProps = (state) => {
+    return {
+        year: state.changeYearReducer.year
+    }
+}
+export default connect(mapStateToProps)(Year)
