@@ -6,23 +6,28 @@ import NoteInput from '../components/NoteInput'
 import Trackers from '../components/Trackers'
 import Habits  from '../components/Habits'
 import {connect} from 'react-redux'
-import {getAllHabitsByDate, addDay, deleteHabitRule, getDayByDate, getDaysByYear} from '../db'
+import {getAllHabitsByDate, addDay, deleteHabitRule, getDayByDate, getDaysByYear, editDay} from '../db'
 import BigButton from '../components/BigButton'
 import changeColor from '../redux/actions/changeColor'
-import { MEDIUM_GRAY } from '../styles/colors'
+import { getColorByEmotion, MEDIUM_GRAY } from '../styles/colors'
 import PicPicker from '../components/PicPicker'
 import {getPic} from '../db'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import * as MediaLibrary from 'expo-media-library'
 import * as Segment from 'expo-analytics-segment'
+import {useFocusEffect, useNavigation} from '@react-navigation/native'
 
 function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
 
     const navigation = useNavigation()
 
     useEffect(() => {
-    dispatch(changeColor(MEDIUM_GRAY, null)) 
-    }, [])
+        if(data) {
+            dispatch(changeColor(getColorByEmotion(data.emotion), data.emotion))
+            setText(data.note)
+        }else {
+            dispatch(changeColor(MEDIUM_GRAY, null)) 
+        }
+    }, [data])
 
     useFocusEffect(() => {
         Segment.screen('Fill Pixel')
@@ -37,6 +42,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     const {day} = route.params
     const date = year+'-'+mouth+'-'+day
     const {update} = route.params
+    const {data} = route.params
 
     useEffect(() => {
         getAllHabitsByDate(date).then(habits => {
@@ -48,11 +54,23 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
     const [isLoading, setLoading] = useState(false)
 
     function add() {
+        console.log('add')
         Segment.trackWithProperties('Add pixel', {pixel: date, pic: pic, emo: emotionState})
         setLoading(true)
         addDay(date, emotionState, text)
         update({date, emotionState, text})
         setLoading(false)
+        navigation.goBack()
+    }
+
+    function edit() {
+        console.log('edit')
+        Segment.trackWithProperties('Edit pixel', {pixel: date, pic: pic, emo: emotionState})
+        setLoading(true)
+        editDay(date, emotionState, text)
+        update({date, emotionState, text})
+        setLoading(false)
+        navigation.goBack()
         navigation.goBack()
     }
 
@@ -104,7 +122,7 @@ function FillPixelScreen({route, nav, emotionState, colorState, dispatch}) {
             <NoteInput text={text} setText={setText}/>
             <Trackers newTrackers={newTrackers} setNewTrackers={(tr) => setNewTrackers(tr)}/>
             <Habits habits={habits} setUptdateHabit={setUptdateHabit} deleteHabit={deleteHabit}/>
-            <BigButton onPress={add} color={colorState} loading={isLoading}>Done</BigButton>
+            <BigButton onPress={!data ? add : edit} color={colorState} loading={isLoading}>Done</BigButton>
             <PicPicker ref={refRBSheet} setPic={setPic} date={date} pics={pics} isLoading={isLoading2}/>
         </ScrollView>
     )

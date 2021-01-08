@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import {FlatList} from 'react-native'
 import moment from 'moment'
-import { ALIZARIN, PUMPKIN, PETER_RIVER, EMERALD, TURQUOISE, MEDIUM_GRAY, DARK_GRAY,  getColorByEmotion} from '../../styles/colors'
+import { MEDIUM_GRAY, DARK_GRAY,  getColorByEmotion} from '../../styles/colors'
 import Pixel from './Pixel'
 
 function Mouth({mouth, year, days, update}) {

@@ -51,7 +51,7 @@ function DayWeek({date, isToUpdate}) {
         const mouth = dateArray[1]
         const d = dateArray[2]
         if(day) {
-            navigation.navigate('Pixel', {year: year, mouth: mouth, day: d})
+            navigation.navigate('Pixel', {year: year, mouth: mouth, day: d, update: setUpdate})
         }else{
             navigation.navigate('Fill Pixel', {year: year, mouth: mouth, day: d, update: setUpdate})
         }

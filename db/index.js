@@ -41,7 +41,7 @@ var createTablesString = [
     "INSERT INTO status(name, icon) VALUES ('Done', 'check');",
     "INSERT INTO status(name, icon) VALUES ('Reported', 'arrow-right');",
     "INSERT INTO status(name, icon) VALUES ('Canceled', 'close');",
-    "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE);",
+    "CREATE TABLE IF NOT EXISTS pics(id INTEGER PRIMARY KEY AUTOINCREMENT, path TEXT, day DATE UNIQUE);",
     "CREATE TABLE IF NOT EXISTS display_type(id INTEGER, type TEXT DEFAULT mouth);",
     "INSERT INTO display_type(id, type) SELECT 1, 'mouth' WHERE NOT EXISTS(SELECT 1 FROM display_type WHERE display_type.id = 1);",
     "CREATE TABLE IF NOT EXISTS uuid(uuid TEXT);",
@@ -126,6 +126,17 @@ var addDay = function(date, emotion, note) {
     })
 }
 
+function editDay(date, emotion, note) {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql("UPDATE days SET emotion = ?, note = ? WHERE day = ?", [emotion, note, date], (trens, res) => {
+                resolve({status: 'ok'})
+            }, (trans, err) => {
+                reject(err)
+            })
+        })
+    })    
+}
 
 var getDaysByYear = function(year) {
     return new Promise((resolve, reject) => {
@@ -470,11 +481,24 @@ var changeDisplayType = function(type) {
 var addPic = function(date, uri) {
     console.log(date, uri)
     db.transaction(tx => {
-        tx.executeSql("INSERT INTO pics (day, path) VALUES (?, ?)", [date, uri], (trans, res) => {}, (trans, err) => {
-            console.log(err)
-            return err
+        tx.executeSql("SELECT (day) FROM pics WHERE day = ?", [date], (trans, res) => {
+            if(res.rows.length < 1) {
+                db.transaction(tx => {
+                    tx.executeSql("INSERT INTO pics (day, path) VALUES (?, ?)", [date, uri], (trans, res) => {}, (trans, err) => {
+                        console.log(err)
+                        return err
+                    })
+                })
+            }else {
+                db.transaction(tx => {
+                    tx.executeSql("UPDATE pics SET path ? WHERE day = ?", [uri, date], (trans, res) => {}, (trans, err) => {
+                        console.log(err)
+                    })
+                })
+            }
         })
     })
+        
 }
 
 var getPic = function(date) {
@@ -561,6 +585,7 @@ export {
     dropTables, 
     getDayByDate, 
     addDay,
+    editDay,
     getDaysByYear,
     getTrackersByDate, 
     getRelativeTrackersByDate,

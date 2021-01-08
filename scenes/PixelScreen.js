@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect }  from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import {getDayByDate} from '../db'
 import EmotionDisplay from '../components/PixelScreen/EmotionDisplay'
 import Note from '../components/PixelScreen/Note'
@@ -9,13 +9,15 @@ import ImageDisplayer from '../components/ImageDisplayer'
 import {getAllHabitsByDate, getPic} from '../db'
 import {connect} from 'react-redux'
 import changeColor from '../redux/actions/changeColor'
-import {getColorByEmotion} from '../styles/colors'
+import {getColorByEmotion, WHITE} from '../styles/colors'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
 
 function PixelScreen({route, navigation, dispatch}) {
 
     const {year} = route.params
     const {mouth} = route.params
     const {day} = route.params
+    const {update} = route.params
 
     const date = year+'-'+mouth+'-'+day
     
@@ -24,6 +26,18 @@ function PixelScreen({route, navigation, dispatch}) {
     useEffect(() => {
         getDayByDate(date).then(newDay => {
             setDay(newDay)
+            navigation.setOptions({
+                headerRight: () => (
+                    <TouchableOpacity style={{padding: 15}} onPress={() => navigation.navigate('Fill Pixel', 
+                    {year: year,
+                    mouth: mouth,
+                    day: day,
+                    update: update, 
+                    data: newDay})}>
+                        <MaterialCommunityIcons name='pencil-outline' color={WHITE} size={24}/>
+                    </TouchableOpacity>
+                    )
+            })
         })
         .catch(err => {
             console.log(err)
