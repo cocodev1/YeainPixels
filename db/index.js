@@ -75,10 +75,12 @@ var createTables = function() {
         createTablesString.forEach(async string => {
             db.transaction(tx => {
                 tx.executeSql(string, [], (trans, res) => {
-                }, (trans, err) => {console.log(err, string)});
+                }, (trans, err) => {
+                    reject(err)
+                })
             })
         })
-        resolve('')
+        resolve({status: 'ok'})
     })
 }
 
