@@ -7,16 +7,17 @@ import AppSplashAnimated from './AppSplashAnimated'
 import * as Segment from 'expo-analytics-segment'
 
 export default function App() {
-    //dropTables()
-    createTables()
-      .then(() => {
-        addUuid().then(res => {
-          getUuid().then(uuid => {
-            Segment.initialize({androidWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny', iosWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny'})
-            Segment.identify(uuid)
-          })
-        })
-      })
+
+  useEffect(() => {
+    const run = async () => {
+      await createTables()
+      await addUuid()
+      const uuid = await getUuid()
+      Segment.initialize({androidWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny', iosWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny'})
+      Segment.identify(uuid)
+    }
+    run()
+  }, [])
 
   return (
     <AppSplashAnimated>

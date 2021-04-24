@@ -1,48 +1,48 @@
 import React from 'react'
 import {} from 'react-native'
-import {LineChart} from 'react-native-chart-kit'
 import { DARK_GRAY, WHITE, MEDIUM_GRAY } from '../../styles/colors'
 import moment from 'moment'
+import {Svg, Path, LinearGradient, Stop, Defs, Text, Line} from 'react-native-svg'
+import * as d3 from 'd3'
 
-function BezierChart({valueList, dateList}) {
+function BezierChart({data}) {
 
-    const data = {
-        labels: dateList.map(date => date = moment(date, 'YYYY-MM-DD').format('MM/DD')),
-        datasets: [
-            {
-                data: valueList
-            }
-        ]
+    const WIDTH = 100
+    const HEIGHT = 70
 
-    }
+    const x = d3.scaleTime()
+        .domain(d3.extent(data, d => new Date(d.day)))
+        .range([0, WIDTH])
+    
+    const y = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.value))
+        .range([HEIGHT-5, 5])
 
-    const chartConfig = {
-        backgroundGradientFrom: MEDIUM_GRAY,
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: MEDIUM_GRAY,
-        backgroundGradientToOpacity: 0,
-        fillShadowGradient: WHITE,
-        fillShadowGradientOpacity: 0.6,
-        color: (opacity = 1) => WHITE,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
-    }
+    const d = d3.line()
+        .x(d => x(new Date(d.day)))
+        .y(d => y(d.value))
+        .curve(d3.curveCatmullRom.alpha(0.5))
+        (data)
 
     return (
-        <LineChart 
-            data={data}
-            width={170}
-            height={100}
-            chartConfig={chartConfig}
-            segments={1}
-            withHorizontalLabels={false}
-            withVerticalLabels={false}
-            withOuterLines={false}
-            withInnerLines={false}
-            withDots={false}
-            bezier
-        />
+        <Svg width={WIDTH} height={HEIGHT}>
+            <Path 
+            d={`${d}`}
+            stroke={WHITE}
+            strokeWidth={2}
+            fill='transparent'/>
+
+            <Path 
+            d={`${d} L ${WIDTH} ${HEIGHT} L 0 ${HEIGHT}`}
+            fill='url(#grad)'/>
+
+            <Defs>
+                <LinearGradient id='grad' x1='0%' x2='0%' y1='0%' y2='100%'>
+                    <Stop offset='0%' stopColor={WHITE} stopOpacity={0.6} />
+                    <Stop offset='100%' stopColor={WHITE} stopOpacity={0} />
+                </LinearGradient>
+            </Defs>
+        </Svg>
     )
 } 
 

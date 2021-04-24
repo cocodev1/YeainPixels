@@ -110,13 +110,14 @@ var getUuid = function() {
     })
 }
 
-var dropTables = function() {
+var dropTables = async function() {
     dropTablesString.forEach(string => {
         db.transaction(tx => {
             tx.executeSql(string, [] , (trans, res) => {}, (trans, err) => console.log(err))
         })
     })
     console.log('droped')
+    return 
 }
 
 var addDay = function(date, emotion, note) {
@@ -228,6 +229,7 @@ var getRelativeTrackersByDate = async function(date) {
 }
 
 var getTrackerByYear = function(year) {
+    console.log(year)
     return new Promise((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql("SELECT * FROM trackers", [], (trans, res) => {
@@ -576,6 +578,25 @@ var getYears = function() {
     })
 }
 
+var getTrackers = function(year=moment().year()) {
+    return new Promise((resolve, reject) => {
+        db.transaction(tx => {
+            tx.executeSql('SELECT * FROM trackers', [], (trans, res) => {
+                var trackers = []
+                for(var i = 0; i < res.rows.length; i++) {
+                    trackers.push(res.rows.item(i))
+                }
+                const names = [...new Set(trackers.map(tracker => tracker.name))]
+                const sortedTrackers = names.map(name => {
+                        const sortedTracker = trackers.filter(tracker => tracker.name == name)
+                        return sortedTracker
+                })
+                resolve(sortedTrackers)
+            })
+        })
+    })
+} 
+
 var getDb = function() {
     return db
 }
@@ -613,5 +634,6 @@ export {
     generateFullYear,
     getAllStatus,
     getYears,
+    getTrackers,
     getDb
 }

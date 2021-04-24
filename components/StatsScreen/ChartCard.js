@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native'
 import {DARK_GRAY, WHITE, MEDIUM_GRAY} from '../../styles/colors'
+import BezierChart from './BezierChart'
+import ModalChart from './ModalChart'
 
-function ChartCard({children, title}) {
+function ChartCard({children, title, data}) {
+
+    const ref = useRef()
 
     return(
         <TouchableOpacity style={styles.mainContainer}>
             <Text style={styles.title}>{title}</Text>
-            <View style={{left: -40}}>{children}</View>
+            <View><BezierChart data={data} /></View>
+            <ModalChart ref={ref}/>
         </TouchableOpacity>
     )
 }
@@ -21,7 +26,9 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: MEDIUM_GRAY,
         marginRight: 20,
-        marginLeft: 20
+        marginLeft: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     title: {
         color: WHITE,

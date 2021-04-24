@@ -4,13 +4,15 @@ import { View, Text } from 'react-native'
 import { WHITE } from '../styles/colors'
 import ChartCards from '../components/StatsScreen/ChartCards'
 
-export default function StatScreen() {
+export default function StatScreen({route, navigation}) {
+
+    const { year } = route.params
 
     return(
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <AvgMood />
             <Text style={{color: WHITE, fontSize: 22}}>More Stats comming soon !</Text>
-            {/*<ChartCards year={'2020'} />*/}
+            <ChartCards year={year} />
         </View>
     )
 }
