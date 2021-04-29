@@ -3,16 +3,20 @@ import {StyleSheet, TouchableOpacity, Text, View} from 'react-native'
 import {DARK_GRAY, WHITE, MEDIUM_GRAY} from '../../styles/colors'
 import BezierChart from './BezierChart'
 import ModalChart from './ModalChart'
+import _ from 'lodash'
+import moment from 'moment'
 
 function ChartCard({children, title, data}) {
+
+    data = _.sortBy(data, d => moment(d.day, 'YYYY-MM-DD').toDate())
 
     const ref = useRef()
 
     return(
-        <TouchableOpacity style={styles.mainContainer}>
+        <TouchableOpacity style={styles.mainContainer} onPress={() => ref.current.open()}>
             <Text style={styles.title}>{title}</Text>
             <View><BezierChart data={data} /></View>
-            <ModalChart ref={ref}/>
+            <ModalChart ref={ref} data={data}/>
         </TouchableOpacity>
     )
 }
