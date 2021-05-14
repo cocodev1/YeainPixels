@@ -20,7 +20,7 @@ function ChartCards({year}) {
 
     return(
         <View style={styles.container}>
-            {trackers.map(tracker => <ChartCard data={tracker} title={tracker[0].name}/>)}
+            {trackers.map((tracker, index) => <ChartCard data={tracker} title={tracker[0].name} key={index}/>)}
         </View> 
     )
 }

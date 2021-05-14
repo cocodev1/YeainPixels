@@ -1,6 +1,7 @@
 import  React, { forwardRef, useEffect } from "react"
 import RBSheet from "react-native-raw-bottom-sheet"
-import { Text as TextC, Dimensions, StyleSheet, View, TouchableOpacity} from 'react-native'
+import { Text as TextC} from 'react-native'
+import {Dimensions, StyleSheet, View, TouchableOpacity} from 'react-native'
 import * as d3 from "d3"
 import { Svg, Path, Text, LinearGradient, Defs, Stop } from 'react-native-svg'
 import { DARK_GRAY, WHITE } from "../../styles/colors"
@@ -12,7 +13,6 @@ import { FontAwesome5 } from "@expo/vector-icons"
 import { useRef } from "react"
 import { useState } from "react"
 import ModalChartOptions from './ModalChartOptions'
-import dayjs from 'dayjs/locale/en'
 
 var ModalChart = forwardRef(({ data }, ref) => {
 
@@ -108,8 +108,8 @@ var ModalChart = forwardRef(({ data }, ref) => {
                     fill='url(#grad)' 
                     x={50}/>
 
-                    {xAxisValue.map(d => <Text x={x(new Date(d))+50} y={HEIGHT} fontSize={15} fill={WHITE} opacity={0.5}>{moment(d).format('MMM D')}</Text>)}
-                    {yAxisValue.map(d => <Text x={5} y={yAxis(d)} fontSize={15} fill={WHITE} opacity={0.5}>{d}</Text>)}
+                    {xAxisValue.map((d, index) => <Text key={index} x={x(new Date(d))+50} y={HEIGHT} fontSize={15} fill={WHITE} opacity={0.5}>{moment(d).format('MMM D')}</Text>)}
+                    {yAxisValue.map((d, index) => <Text key={index} x={5} y={yAxis(d)} fontSize={15} fill={WHITE} opacity={0.5}>{d}</Text>)}
 
 
                     <Defs>

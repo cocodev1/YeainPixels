@@ -45,7 +45,7 @@ function AvgMood() {
             <Text style={styles.text}>Mood of the year</Text>
             <Text style={styles.avgText}>{Math.round(avg*100)/100}</Text>
             <Svg width={WIDTH-MARGIN} height={HEIGHT}>
-                {colors.map((color, i) => <Line x1={(WIDTH-MARGIN)/5*i} x2={(WIDTH-MARGIN)/5*(i+1)} y1={HEIGHT/2} y2={HEIGHT/2} strokeLinejoin={'round'} stroke={color} strokeWidth={5}/>)}
+                {colors.map((color, i) => <Line key={i} x1={(WIDTH-MARGIN)/5*i} x2={(WIDTH-MARGIN)/5*(i+1)} y1={HEIGHT/2} y2={HEIGHT/2} strokeLinejoin={'round'} stroke={color} strokeWidth={5}/>)}
                 <Circle cx={x(avg)} cy={HEIGHT/2} r={8} fill={MEDIUM_GRAY}/>
             </Svg>
         </View>

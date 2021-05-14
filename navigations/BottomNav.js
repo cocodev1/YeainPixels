@@ -23,7 +23,7 @@ export default function BottomNav({route, navigation}) {
     }, [year])
 
     return(
-        <Tab.Navigator initialRouteName={'Stats'}
+        <Tab.Navigator initialRouteName={'Year'}
         screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
                 let iconName

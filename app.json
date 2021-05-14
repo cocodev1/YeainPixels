@@ -22,8 +22,9 @@
     },
     "android": {
       "package": "fr.simon.yip",
-      "versionCode": 28,
-      "enableDangerousExperimentalLeanBuilds" : false
+      "versionCode": 33,
+      "enableDangerousExperimentalLeanBuilds" : false,
+      "permissions": ["CAMERA_ROLL", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "android.permission.READ_INTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
