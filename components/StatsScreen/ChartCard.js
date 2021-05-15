@@ -13,7 +13,7 @@ function ChartCard({children, title, data}) {
     //const ref = useRef()
 
     return(
-        <TouchableOpacity style={styles.mainContainer} onPress={/*() => ref.current.open()*/}>
+        <TouchableOpacity style={styles.mainContainer} /*onPress={() => ref.current.open()}*/>
             <Text style={styles.title}>{title}</Text>
             <View><BezierChart data={data} /></View>
             {/*<ModalChart ref={ref} data={data}/>*/}
