@@ -21,6 +21,7 @@ function YearScreen() {
             <ScrollView>
                 <Year update={update} setUpdate={setUpdate}/>
             </ScrollView>
+        
         </View>
     )
 }
