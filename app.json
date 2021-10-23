@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "fr.simon.yip",
-      "versionCode": 34,
+      "versionCode": 42,
       "permissions": ["CAMERA_ROLL", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "android.permission.READ_INTERNAL_STORAGE"]
     },
     "web": {
