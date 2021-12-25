@@ -5,6 +5,7 @@ import Store from './redux/store/configureStore'
 import {createTables, addUuid, getUuid, dropTables} from './db'
 import AppSplashAnimated from './AppSplashAnimated'
 import * as Segment from 'expo-analytics-segment'
+import { AppEventsLogger } from "react-native-fbsdk-next"
 
 export default function App() {
 
@@ -13,7 +14,7 @@ export default function App() {
       await createTables()
       await addUuid()
       const uuid = await getUuid()
-      Segment.initialize({androidWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny', iosWriteKey: 'H01Crf99g0P3Pr6EkEF5cbR5lnZV7xny'})
+      Segment.initialize({androidWriteKey: process.env.WRITE_KEY, iosWriteKey: process.env.WRITE_KEY})
       Segment.identify(uuid)
     }
     run()

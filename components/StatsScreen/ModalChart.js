@@ -13,6 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons"
 import { useRef } from "react"
 import { useState } from "react"
 import ModalChartOptions from './ModalChartOptions'
+import { parse } from "react-native-redash"
 
 var ModalChart = forwardRef(({ data }, ref) => {
 
@@ -70,8 +71,7 @@ var ModalChart = forwardRef(({ data }, ref) => {
         const d = d3.line()
             .x(d => x(moment(d.day, 'YYYY-MM-DD').toDate()))
             .y(d => y(d.value))
-            .curve(d3.curveCatmullRom.alpha(0.5))
-            (datas)
+            .curve(d3.curveBasis)(datas)
 
         return(
             <RBSheet 

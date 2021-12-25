@@ -9,6 +9,8 @@ import moment from 'moment'
 function ChartCard({children, title, data}) {
 
     data = _.sortBy(data, d => moment(d.day, 'YYYY-MM-DD').toDate())
+    data = data.filter(d => !isNaN(d.value) && d.value != null && d.value != undefined)
+    data = data.filter(d => d.day)
 
     const ref = useRef()
 

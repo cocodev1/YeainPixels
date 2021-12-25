@@ -4,6 +4,8 @@ import { DARK_GRAY, WHITE, MEDIUM_GRAY } from '../../styles/colors'
 import moment from 'moment'
 import {Svg, Path, LinearGradient, Stop, Defs, Text, Line} from 'react-native-svg'
 import * as d3 from 'd3'
+import * as shape from "d3-shape"
+import { parse } from "react-native-redash"
 
 function BezierChart({data}) {
 
@@ -18,11 +20,13 @@ function BezierChart({data}) {
         .domain(d3.extent(data, d => d.value))
         .range([HEIGHT-5, 5])
 
-    const d = d3.line()
-        .x(d => x(new Date(d.day)))
-        .y(d => y(d.value))
-        .curve(d3.curveCatmullRom.alpha(0.5))
-        (data)
+    var d = shape
+            .line()
+            .x(d => x(new Date(d.day)))
+            .y(d => y(d.value))
+            .curve(d3.curveBasis)(data)
+
+    console.log(d, 'DDDDDDDDDDDD')
 
     return (
         <Svg width={WIDTH} height={HEIGHT}>

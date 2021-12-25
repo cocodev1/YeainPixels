@@ -11,6 +11,7 @@ import SetTrackerValue from './SetTrackerValue'
 import moment from 'moment'
 import {useRoute} from '@react-navigation/native'
 import shortNumber from 'short-number'
+import { AppEventsLogger } from "react-native-fbsdk-next"
 
 function Tracker(props) {
     const route = useRoute();
